@@ -643,7 +643,7 @@ library(ggthemes)
 
 What if you wanted to show a story of the improvement of life expectancy over time? You might want to fit a linear regression model to your scatter plot. The code below demonstrates how this might be done, using the visualization theme from The Economist.  
 
-```{r mult_geoms, include=TRUE, echo=TRUE, eval=TRUE, fig.height=6.2}
+```{r mult_geoms, include=TRUE, echo=TRUE, eval=TRUE}
 gapminder %>% 
   mutate(generation=ifelse(year < 1970, '1950s-60s',
                     ifelse(year >= 1970 & year < 1990, '1970s-80s', '1990s-2000s'))) %>% 
