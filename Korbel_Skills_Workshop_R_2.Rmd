@@ -1,66 +1,150 @@
 ---
-title: "Pardee Skills Workshop: Data Management, Manipulation, and Visualization with R"
+title: "Pardee Skills Workshop: Data Manipulation and Visualization Basics using R"
 author: "Mickey Rafa"
-date: "Spring 2018"
+date: "May 15, 2018"
+fontsize: 12pt
 output:
   html_notebook:
     toc: yes
     fig.width: 7
     fig.align: "center"
-    code_folding: hide
+    code_folding: "hide"
   html_document:
     toc: yes
     toc_depth: 3
     fig.width: 7
     fig.align: "center"
-    code_folding: hide
+    code_folding: "hide"
 ---
-
-```{r setup, include=FALSE, echo=TRUE}
-library(tidyverse)      #for data management, manipulation, visualization, and exploratory data analysis
-```
-
-# Introduction
 
 # Overview
 
-`dplyr` is a package designed to standardize the data management and manipulation process in R. `dplyr` has a small set of functions (which may be more easily thought of as **verbs**) which are designed to help users navigate the most common challenges of data manipulation. These are:  
+This workshop session will help you familiarize with two of R's most widely used packages, `dplyr` and `ggplot2`. These packages are part of what is called the **tidyverse**, which is a collection of packages that are designed to work together in R to simplify and data manipulation, discovery, visualization, analysis, and more.[^1]
 
-*  `distinct()` returns the unique values of a variable.  
-*  `filter()` returns the observations, or rows, based on logic that you determine.    
-*  `arrange()` changes the ordering of the rows.
-*  `mutate()` adds new variables that are functions of existing variables. These are often referred to as "derived" variables.  
-*  `summarise()` reduces multiple values down to a single summary.  
+<center>
 
-We will use R's `ggplot2` package to create exploratory visualizations of data. This will give you the building blocks for creating beautiful visualizations.  
+![Each tile is a package that makes up the "tidyverse"](http://www.dicook.org/files/rstudio/img/tidyverse.png)
 
-Combining datasets is often critical for data analysis. This lesson will briefly survey of dataset merging and demonstrate the use of two `dplyr` functions: `left_join()` and `inner_join()`.
+</center>
 
-`dplyr` and `ggplot2` can be thought of as supplying a grammar for data manipulation and data visualization, respectively. 
+`dplyr` is designed to standardize the data management and manipulation process in R. `dplyr` has a small set of functions (which may be more easily thought of as verbs) which are designed to help users navigate the most common challenges of data manipulation.[^2] These are:  
 
-# Learning objectives  
+dplyr function                          | Purpose
+--------------------------------------- | ---------------------------------------------
+`dplyr::distinct()`                     | Returns the unique values of a variable
+`dplyr::filter()`                       | Returns the observations, or rows, based on logic that you determine
+`dplyr::arrange()`                      | Changes the ordering of the rows
+`dplyr::mutate()`                       | Adds new variables that are functions of existing variables
+`dplyr::summarise()`                    | Reduces multiple values down to a single summary
+`dplyr::group_by()`                     | Groups observations by categorical variables for summary analysis
 
-By the end of this lesson, you will be familiar with the use of each of the above mentioned functions.
+We will use R's `ggplot2` package to create exploratory visualizations of data. This will give you the building blocks for creating beautiful visualizations. There are three common elements of ggplot graphics that you will learn how to use in this session, including:  
+
+ggplot element                          | Purpose
+--------------------------------------- | --------------------------------------------
+**Data**                                | The dataset that you want to visualize
+**Aesthetics**, or aesthetic mappings   | The variables from the dataset that you want to visualize (and how you want to visualize them)
+**Geoms**                               | The type of visualization that you want to create (scatter, bar plot, line plot, histogram, etc.)
+
+`dplyr` and `ggplot2` are packages that supply a **grammar** for data manipulation and data visualization, respectively. This workshop will only scratch the surface of what is possible, but learning the fundamentals of these packages can empower you to do a ton of exciting things in R.
+
+[^1]: https://www.tidyverse.org/packages/
+[^2]: https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html
+
+Two quick notes on the format of this workshop:  
+
+1.  There are links to additional resources in the end notes of this document. I have personally used most of these resources to build my skills in R, so I hope you will find them useful, too.  
+2.  Throughout the workshop, there will be exercises to complete on your own or with your table mates. Do you best to complete these based on what you've learned. If you get stuck, you can click the "Code" button on the right to show the code that I would use to answer the question. Use that to test yourself and figure out why it works.  
+
+<br> 
+
+# Setting up your R Project environment  
+
+To get started, we need to set up our new **project environment**, with the following steps:  
+
+1.  Open R Studio, and go to **File** --> **New Project**.
+
+<center>
+![](new_project_1.png)
+</center>
+<br>
+2.  Select **New Directory**.  
+
+<center>
+![](new_project_2.png)
+</center>
+<br>
+3.  Select **New Project**.  
+
+<center>
+![](new_project_3.png)
+</center>
+<br>
+4.  Type in a name for your project under "Directory name". Choose the location where you want this R Project to live on your computer. Select **Create Project**.
+
+<center>
+![](new_project_4.png)
+</center>
+<br>
+These steps have established a directory on your computer where your R project lives. This is a very good practice to keep when you are starting a new analysis. You will keep all related files in this project folder, and R will know that this is your **working directory** (where all files relevant to your project are saved).
+
+5. Finally, go to **File** --> **New File** --> **R Notebook**. R notebook files are an excellent way to perform an analysis, because they allow for R code and documentation to work side-by-side. This enables you to tell a story that moves alongside your quantitative analysis, and it can be output in all kinds of formats, including Word documents, .pdfs, and .html files.
+
+<center>
+![](new_project_5.png)
+</center>
+<br>
+We could do a full session on R projects and notebooks, but this should be sufficient to get you started.
+
+<br>
 
 # The Gapminder dataset  
 
-We'll learn the main `dplyr` variables using the **gapminder** dataset. 
+<center>
 
-```{r read_gapminder, include=TRUE, echo=TRUE}
-library(gapminder)                  #for the gapminder dataset
+![Hans Rosling -- our favorite Swedish statistician](https://eagereyes.org/wp-content/uploads/2017/02/hans-rosling-tc14.jpg)
 
-gapminder <- gapminder::gapminder
+</center>
+
+We'll learn the main `dplyr` variables using the **gapminder** dataset. Now that we have our project environment set up, some brief refreshers from the previous workshop:  
+
+1.  Install the tidyverse and gapminder packages (`install.packages()`)  
+```{r install_gapminder, include=TRUE, echo=TRUE, include=TRUE}
+#install.packages(c("tidyverse", "gapminder"))
+```
+
+2.  Load the tidyverse and gapminder packages (`library()` and `require()` effectively do the same thing, but `library()` provides more information that is occasionally useful)  
+
+```{r read_tidyverse_gapminder, include=TRUE, echo=TRUE}
+library(tidyverse)      #for data management, manipulation, visualization, and exploratory data analysis
+library(gapminder)      #for the gapminder dataset
+```
+
+3.  Type in `data("gapminder")` to read in the gapminder dataset as an object in your global environment.  
+
+```{r read_gapminder_data, include=TRUE, echo=TRUE}
+data("gapminder")
+```
+
+4.  Look at the structure of the gapminder dataset (`str()` and `glimpse()` both work here)
+
+```{r str_gapminder, include=TRUE, echo=TRUE}
 str(gapminder)
 ```
 
-Looking at the general structure of the dataset tells us a few important insights:
+Looking at the general structure of the dataset gives us a few useful insights:
 
-*  Rows and columns
-*  Variable types: factor (categorical) vs. numeric
+*  Object class  
+*  Rows and columns  
+*  Variable types: factor (categorical) vs. numeric/integer  
 
-```{r summary_gapminder, include=TRUE}
+Use the `summary()` command to produce a high-level statistical summary of the variables.
+
+```{r summary_gapminder, include=TRUE, echo=TRUE}
 summary(gapminder)
 ```
+
+<br> 
 
 # dplyr's main functions  
 
@@ -68,38 +152,56 @@ summary(gapminder)
 
 To begin our anlaysis, let's look at the years that are available in the gapminder dataset. There are many ways to do this, but I'll use the `distinct()` function from `dplyr`.
 
-```{r distinct_years, include=TRUE}
+**Create a new code chunk (Ctrl + Alt + I), and type `gapminder %>% distinct(year)`.** Then, execute the code chunk (with the green play button in the upper righthand corner of the chunk).
+
+```{r distinct_years, include=TRUE, echo=TRUE}
 gapminder %>% 
   distinct(year)
 ```
 
 This shows us that we have data that are in five-year increments from 1952 to 2007. 
 
-Before we move on, let's take a closer look at the code above, because it uses a style that we will be fluent in by the end of this session. This code uses "**piping**" (the %>%), which is a coding style that makes code more readable and easier to troubleshoot. The "pipe" (%>%) tells R to take the object to the left of the pipe and feed it action following the pipe. The code above can be read as:
+Before we move on, let's take a closer look at the code above, because it uses a style that we will be fluent in by the end of this session. This code uses "**piping**" (the %>%), which is a coding style that makes code more readable and easier to troubleshoot.[^3] The "pipe" (%>%) tells R to take the object to the left of the pipe and feed it to the first argument in the code following the pipe. The code above can be read as:
 
-*  Feed the `gapminder` dataframe into the `distinct()` function  
+*  Take the `gapminder` dataframe and feed it into the `distinct()` function, THEN  
 *  Return the distinct or unique values in the `year` column  
 
 When reading your code, you can think of the **pipe operator (%>%)** as "THEN". To use the above example, take the gapminder dataframe, **THEN** return the distinct values in the year column. 
 
-Think of this as the Earnest Hemingway style of writing code in R (simple, yet powerful). This simple example may not convey the full utility of piping, but that will be clear by the end of the session. 
+Let's look at the **distinct continents** in the gapminder dataset. In your code chunk, relace `distinct(year)` with `distinct(continent)`.
+
+```{r distinct_continent, include=TRUE, echo=TRUE}
+gapminder %>% 
+  distinct(continent)
+
+#This is how the code looks without piping...not too difficult (yet)
+#distinct(gapminder, continent)
+```
+
+This simple example does not convey the full value of piping, but that will be clear by the end of the session. 
+
+[^3]: For an extremely in-depth article on pipe operators, including where they came from and why they are so useful, see here: https://www.datacamp.com/community/tutorials/pipe-r-tutorial  
 
 ## filter() 
 
-The `filter()` function allows you to subset your data by values of the variables in your dataset. For instance, we can filter the gapminder dataframe to look at only the values in the year 2007.  
+The `filter()` function allows you to subset your data by values of the variables in your dataset. 
 
-```{r filter_year, include=TRUE}
+**We're going to use piping a lot in this session**, so let's get comfortable with it. Try using the pipe operator keyboard shortcut (Ctrl + Shift + M) with your code from this point forward. 
+
+Let's filter the gapminder dataframe to look at only the values in the year 2007.  
+
+```{r filter_year, include=TRUE, echo=TRUE}
 gapminder %>% 
   filter(year == 2007)
 ```
 
-This returns the 142 records (or rows) that are in the year 2007. In the `filter()` function, you 
+This returns the 142 records (or rows) that are in the year 2007. 
 
-What's the double equal sign ("**==**") mean? This is a **boolean equal**, meaning that it is evaluating whether the equation returns a TRUE or FALSE. The above code can be read as "filter, return rows in which the variable year equals 2007".
+What's the double equal sign ("**==**") mean? This is a **boolean equal**, meaning that it is evaluating whether the equation returns a TRUE or FALSE. The above code can be read as "filter, return rows in which the variable year equals 2007". All rows that would return a TRUE for "year equals 2007" are displayed.  
 
 You can also use the `filter()` command on multiple conditions, too. Just separate the conditions with a comma. The code below takes the gapminder dataframe, and filters the data in which the **country** is South Africa and the **year** is 2007. 
 
-```{r filter_year_country, include=TRUE}
+```{r filter_year_country, include=TRUE, echo=TRUE}
 gapminder %>% 
   filter(country == 'South Africa',
          year == 2007)
@@ -107,35 +209,86 @@ gapminder %>%
 
 This shows that the dataset has only one occurrence of South Africa in 2007. Note that in `dplyr`, separating arguments with a comma allows you to combine multiple logical expressions. How would you read the above code aloud?
 
-**One thing to keep in mind** -- your data object remains unchanged, unless you assign the `filter()` to a new object. This is a way to view or subset your data without changing the original dataframe.  
+**One thing to keep in mind** -- your data object remains unchanged, unless you assign the `filter()` to a new object. To save the above code as a new object, you need to assign it to a new named object, such as:  
+
+<center>
+
+>sa_2007 <- gapminder %>% 
+  filter(country == 'South Africa',
+         year == 2007)
+
+</center>
+
+<br>
 
 ## arrange()  
 
 The `arrange()` function sorts your data -- a very common thing to do in an exploratory data analysis. Let's arrange the gapminder data by life expectancy (the variable is called **lifeExp**).  
 
-```{r arrange_lifeExp, include=TRUE}
+```{r arrange_lifeExp, include=TRUE, echo=TRUE}
 gapminder %>% 
   arrange(lifeExp)
 ```
 
-This shows us that Guinea in 1972 is the lowest life expectancy in the dataset. By default, the `arrange()` function sorts your data in ascending order. What if we want to sort the data by the largest GDP per capita (variable is **gdpPercap**) in the dataset? 
+This shows us that Rwanda in 1992 is the lowest life expectancy in the dataset. By default, the `arrange()` function sorts your data in ascending order. What if we want to sort the data by the largest GDP per capita (variable is **gdpPercap**) in the dataset? 
 
 ```{r arrange_desc_gdppercap, include=TRUE, echo=TRUE}
 gapminder %>% 
-  arrange(desc(gdpPercap))
+  arrange(-gdpPercap)
+
+#you could also do...
+#gapminder %>% 
+#  arrange(desc(gdpPercap))
 ```
 
-You can also arrange by multiple variables with the `arrange()` function. Let's say that you want to arrange the gapminder data by year and by life expectancy. Try using `gapminder %>% arrange(year, lifeExp)`. What do you see?
+---
 
-**Quiz**:
+**Exercises**:
 
-*  Let's put the `filter()` and `arrange()` functions together. I'd like to see the **average life expectancy of all countries in the year 2002, sorted in ascending order**. How might we do that?  
-
-```{r filter_arrange_combined, include=FALSE, echo=FALSE}
+*  You can also arrange by multiple variables with the `arrange()` function. Let's say that you want to arrange the gapminder data by year and by life expectancy. Try using `gapminder %>% arrange(year, lifeExp)`. What do you see?  
+<br>
+```{r arrange_ex1, include=TRUE, echo=TRUE, eval=FALSE}
 gapminder %>% 
-  filter(year == 2002) %>% 
-  arrange(lifeExp)
+  arrange(year, lifeExp)
 ```
+
+*  Let's put the `filter()` and `arrange()` functions together. I'd like to see the **life expectancy of all Asian countries from the year 2000 to the most recent year, sorted in ascending order**. How might we do that?  
+<br>
+```{r filter_arrange_combined, include=TRUE, echo=TRUE, eval=FALSE}
+gapminder %>% 
+  filter(year >= 2000,
+         continent == 'Asia') %>% 
+  arrange(-lifeExp)
+```
+<br>
+When you are combining multiple functions, the power and clarity of piping becomes more obvious. This is what the previous code would look like **without piping**.
+<br>
+
+<center>
+
+> arrange(filter(gapminder, year >= 2000, continent == 'Asia'), -lifeExp)
+
+<br>
+
+####**Who would like to try to read this?**
+
+
+</center>
+
+<br>
+
+Without piping, you need to write this code inside-out! Does anyone actually find this easier?! You might think of piping as the Earnest Hemingway style of writing code in R (simple, yet powerful).
+
+<center>
+
+> "How did you go bankrupt?" Bill asked.  
+> "Two ways," Mike said. "Gradually and then suddenly."
+
+Earnest Hemingway in *The Sun Also Rises*
+
+</center>
+
+---
 
 ## mutate()  
 
@@ -143,51 +296,63 @@ In data analysis, it's common to want to create or *derive* new variables from y
 
 For these new variables, let's save this as a new data object.
 
-```{r gapminder_2, include=TRUE}
+```{r gapminder_2, include=TRUE, echo=TRUE}
 gapminder <- gapminder %>% 
   mutate(time_dist = year - 1952)
 
 print(gapminder)
 ```
 
-**Quiz**:  
+---
 
-*  Use `dplyr::mutate()` to create two other variables -- **GDP** and **population (in millions)**.  
+**Exercises**:  
 
-```{r gapminder_2_quiz, include=TRUE}
+*  Use `dplyr::mutate()` to create two other variables -- **GDP** and **population (in millions)**. Note that just like the `filter()` function, which allows you to have multiple conditions, you can also create multiple new variables by using a comma within `mutate()`.  
+```{r gapminder_2_quiz, include=TRUE, echo=TRUE}
 gapminder <- gapminder %>% 
   mutate(gdp = gdpPercap * pop,
          pop = pop/1000000)
 ```
 
-Note that just like the `filter()` function, which allows you to have multiple conditions, you can also create multiple new variables by using a comma within `mutate()`.
-
-**Quiz**:
-
 *  What are the countries with the largest total GDP in 2007?  
 
-```{r filter_gdp, include=TRUE}
+```{r filter_gdp, include=TRUE, echo=TRUE, eval=FALSE}
 gapminder %>% 
   filter(year == 2007) %>% 
   arrange(desc(gdp))
 ```
 
+---
+
 ## summarise()   
 
-In your own anlayses, you've probably calculated summary stats for variables. Using the gapminder dataset as an example, what is the mean life expectancy from the dataset? This is where `summarise()` function comes in handy. Think of `summarise()` as useful when you want to collapse many rows in a smaller number of rows.
+In your own anlayses, you've probably calculated summary stats for variables. Earlier, we used `summary(gapminder)` to get an overview of the gapminder dataset, based on some preset functions. `summarise()` can produce the same summary statistics as `summary()`, but you have total control over the output (it can do some neat things with grouped data, too, which you will see later). Think of `summarise()` as useful when you want to condense many rows of data down into a smaller number of rows with summary information.
 
-The `summarise()` function follows the same syntax as `mutate()`, which is used for creating or deriving new variables, too. The difference is that `summarise()` is creating a new **grouped** variable with an **aggregate function*.*
+The `summarise()` function follows the same syntax as `mutate()`, which is used for creating or deriving new variables, too. The difference is that `summarise()` is creating a new **grouped** variable with an **aggregate function**. Using the gapminder dataset as an example, what is the mean life expectancy from the dataset? 
 
-```{r summarise_ex1, include=TRUE}
+```{r summarise_ex1, include=TRUE, echo=TRUE}
 gapminder %>% 
   summarise(meanlifeExp = mean(lifeExp))
 ```
 
 This code is returning the average life expectancy for all countries and years in the dataset. 
 
+---
+
+**Exercise**:  
+
+*  What happens if you use `mutate()` instead of `summarise()` to calculate the average life expectancy for the data? Why is that different from using `summarise()`?  
+
+```{r summarise_ex1_2, include=TRUE, echo=TRUE, eval=FALSE}
+gapminder %>% 
+  mutate(meanlifeExp = mean(lifeExp))
+```
+
+---
+
 This may be useful for your research question, but it is far more likely that you'll want to summarise a variable like **lifeExp** by a **grouping variable**. For instance, what is the average life expectancy from this dataset **by year**? Anytime you want to summarise a variable "BY" another variable, `dplyr::group_by()` comes in handy.
 
-```{r summarise_ex2, include=TRUE}
+```{r summarise_ex2, include=TRUE, echo=TRUE}
 gapminder %>% 
   group_by(year) %>% 
   summarise(meanlifeExp = mean(lifeExp))
@@ -195,64 +360,121 @@ gapminder %>%
 
 The above code groups the gapminder dataset by the **year** variable and computes the average life expectancy per year. This shows the gradual advancement in global average life expectancy over time. Pretty neat!
 
-The gapminder dataset begs the question: how has the average life expectancy changed over time and across continents? Said another way, how has average life expectancy changed **BY** year and **BY** continent? Just like previous functions that we've learned (such as `filter()` and `mutate()`), you can group your data by multiple conditions with comma.
+The gapminder dataset begs the question: how has the average life expectancy changed over time and across continents? Said another way, how has average life expectancy changed **BY** year and **BY** continent? **BY** is a hint that you want to group your data to answer your question. Just like previous functions that we've learned (such as `filter()` and `mutate()`), you can group your data by multiple conditions with comma.
 
-```{r summarise_ex3, include=TRUE}
+```{r summarise_ex3, include=TRUE, echo=TRUE}
 gapminder %>% 
   group_by(year, continent) %>% 
   summarise(meanlifeExp = mean(lifeExp))
 ```
 
-With this code, we're able to see some strong variability in average life expectancy by continent. This is worth exploring more closely. Let's re-write the above code and save it as a new dataframe for further exploration. I'd like to add a few additional summary calculations:  
+With this code, we're able to see some strong variability in average life expectancy by continent. This is worth exploring more closely.  
+
+---
+
+**Exercises**:  
+
+I'd like to create a new **grouped** summary dataframe with the gapminder dataset. Group gapminder by year and continent, and generate the following summary calculations:  
 
 *  The total population (`sum()`)  
+*  The mean life expectancy (`mean()`) 
 *  The mean GDP per capita (`mean()`)  
 *  The count of countries in the dataset in each continent/year pair (`n()`)
 
-```{r summarise_ex3_save, include=TRUE}
+Save this to a new object called `gapminder_by_year_continent`. 
+
+```{r summarise_ex3_save, include=TRUE, echo=TRUE}
 gapminder_by_year_continent <- gapminder %>% 
   group_by(year, continent) %>% 
-  summarise(meanlifeExp = mean(lifeExp),
-            totalPop = sum(pop),
+  summarise(totalPop = sum(pop), 
+            meanlifeExp = mean(lifeExp),
             meanGdpPercap = mean(gdpPercap),
             count_countries = n())
 ```
 
-**Quiz**:
+Now, answer the following questions:
 
 *  Which continent had the lowest mean life expectancy in 1982?  
+
+```{r summarize_q1, include=TRUE, eval=FALSE, echo=TRUE}
+gapminder_by_year_continent %>% 
+  filter(year == 1982) %>% 
+  arrange(meanlifeExp)
+```
+
 *  How many countries in Oceania are in the dataset in 2007?  
+
+```{r summarize_q2, include=TRUE, eval=FALSE, echo=TRUE}
+gapminder_by_year_continent %>% 
+  filter(year == 2007,
+         continent == 'Oceania')
+```
+
 *  What was Africa's mean GDP per capita value in 1987?  
 
-Note that `group_by()` is most commonly combined with `summarise()`, but you can also use it with `mutate()`. For instance, you could group the gapminder dataset by continent and produce within continent rankings for life expectancy. There's so much that you can do with the `dplyr` verbs working together. 
+```{r summarize_q3, include=TRUE, eval=FALSE, echo=TRUE}
+gapminder_by_year_continent %>% 
+  filter(year == 1987,
+         continent == 'Africa')
+```
+
+*  What is the difference between `summary()` and `summarise()`, and when would you use them?  
+
+---
+
+There's so much that you can do with the `dplyr` verbs working together. `group_by()` is often combined with `summarise()`, but you can also use it with `mutate()`. For instance, you could group the gapminder dataset by year and produce within year rankings for life expectancy. 
+
+```{r groupby_mutate_ex, include=TRUE, eval=TRUE, echo=TRUE}
+gapminder %>% 
+  group_by(year) %>% 
+  mutate(lifeExp_rank = rank(desc(lifeExp))) %>% 
+  arrange(year, lifeExp_rank)
+```
+
+<br> 
 
 # Visualization with ggplot2  
 
-`ggplot2` is a tremendously flexible visualization package in R. "Gg" stands for the "grammar of graphics", which is an extremely powerful set of language tools that help define elements of a visualization. 
+`ggplot2` is a tremendously flexible visualization package in R. "Gg" stands for the "grammar of graphics", which is an effort to build a language around how analysts define elements of a visualization. The rationale behind the development of `ggplot2` is simple. If you have a way of communicating elements of a data visualization **with precision**, then you can develop and collaborate more effectively.  
 
-There are three primary elements of ggplot graphics:  
+<center>
+
+![Here for obvious reasons](https://upload.wikimedia.org/wikipedia/en/0/02/Phantomtollbooth.PNG)
+
+</center>
+
+There are three primary elements of `ggplot2` graphics:  
 
 1.  The **data** that you want to visualize.    
-2.  The **aesthetics** of the graphic, or the variables that make up the visualization.  
-3.  The **geoms**, or the type of visualization that you want to create. 
+2.  The **aesthetics** (or aesthetic mappings) of the graphic, the variables that make up the visualization.  
+3.  The **geoms**, or the type of visualization that you want to create (scatterplot, bar plot, line graph, histogram, etc.). 
 
-There are many, many types of visualizations supported, so mastering these elements unleashes a ton of possibilities.[^1] We will come back to each of the elements for every viz that we create.
+There are many, many types of visualizations supported, so mastering these elements unleashes a ton of possibilities.[^4] We will come back to each of the elements for every viz that we create.
 
 Let's begin with scatterplots. These are visualizations that show the relationship between two variables. Let's create a viz of the relationship between GDP per capita and life expectancy in 2007:  
 
-*  First, using the **piping** that we learned previously, filter the gapminder data to only include the 2007 rows. *  Then, let's start defining the ggplot elements.  
+*  First, using the **piping** that we learned previously, filter the gapminder data to only include the 2007 rows.  
+*  Then, let's start defining the `ggplot2` elements (data, aesthetics, geoms). Click on the "Code" box below to walk through an example.
 
-[^1]: This is a useful reference for learning about all of the geom options in ggplot. This might look overwhelming, but it is something that you pick up more as you move into more exotic visualization types. (http://ggplot2.tidyverse.org/reference/#section-layer-geoms)
+[^4]: This is a useful reference for learning about all of the geom options in ggplot. This might look overwhelming, but it is something that you pick up more as you move into more exotic visualization types. (http://ggplot2.tidyverse.org/reference/#section-layer-geoms)
 
-```{r gapminder_scatter_1, include=TRUE, echo=TRUE}
+```{r gapminder_scatter_1, include=TRUE, echo=TRUE, eval=TRUE}
 gapminder %>%                           #DATA
   filter(year == 2007) %>%              #DATA
   ggplot(aes(x=gdpPercap,               #AESTHETICS
                  y=lifeExp)) +          #AESTHETICS
-  geom_point()                          #GEOM
+  geom_point()
+  geom_smooth(method = "lm") #GEOM
 ```
 
-Let's examine the code before we unpack the graphic. You'll recall from the `dplyr` functions that we've learned so far that **piping** is an effective way to write code that flows between functions. First, we piped the gapminder data to `filter()`, then we piped that filtered dataframe to ggplot(). Within ggplot's functions (`ggplot()` and `geom_point()`) we use a plus sign. Think of ggplot as a canvas where the graphic is built by the addition of elements. First, we defined the aesthetics (`aes()`), or what we wanted to graph. Then, we added the **geom** to the aesthetic, which tells ggplot the type of graphic that we wanted to create. We'll get more practice with ggplot's three elements -- data, aesthetics, and geoms -- as we go.
+Let's examine the code before we unpack the graphic:  
+
+*  You'll recall from the `dplyr` functions that we've learned so far that **piping** is an effective way to write code that flows between functions. First, we piped the gapminder data to `filter()`, then we piped that filtered dataframe to `ggplot()`.  
+*  Within ggplot's functions (`ggplot()` and `geom_point()`) we use a plus sign. Think of ggplot as a canvas where the graphic is built by the addition of elements.  
+*  Then, we defined the aesthetics (`aes()`), or what we wanted to graph.  
+*  Finally, we added the **geom** to the aesthetic, which tells ggplot the type of graphic that we wanted to create.  
+
+We'll get more practice with ggplot's three elements -- data, aesthetics, and geoms -- as we go.
 
 The graphic shows some interesting behavior:  
 
@@ -273,11 +495,23 @@ gapminder %>%                         #DATA
 
 This illustrates that many of the poorest performing countries are located in Africa.
 
-**On your own**:
+---
+
+**Exercises**:
 
 *  Set `color="blue"` in the previous code. What do you see? Why do you think that is happening?  
 
-There are dozens of ways that you can customize `ggplot` visualizations. With enough practice, you can have total control of the visualizations that you create. Let's start with two very common and useful customizations:  
+```{r gapminder_scatter_2_2, include=TRUE, eval=FALSE, echo=TRUE}
+gapminder %>%                         #DATA
+  filter(year == 2007) %>%            #DATA
+  ggplot(aes(x=gdpPercap,             #AESTHETIC
+             y=lifeExp)) +            #AESTHETIC    
+  geom_point(color="blue")            #GEOM
+```
+
+---
+
+There are dozens of ways that you can customize `ggplot2` visualizations. With enough practice, you can have total control of the visualizations that you create. Let's start with two very common and useful customizations:  
 
 1.  Putting the x-axis on a logarithmic scale, and  
 2.  Changing the axis labels.
@@ -308,37 +542,62 @@ gapminder %>%
        y='Average life expectancy')
 ```
 
-**On your own**:  
+---
+
+**Exercises**:  
 
 *  Search Google to find out how to add a title to your ggplot graphic.  
 *  Create another scatterplot with another variable combination from the gapminder dataset.  
 
+---
+
 ## Visualizing summary data 
 
-Let's go back to the `gapminder_by_year_continent` dataframe that we created earlier. This is a dataframe with summary stats by continent and year. We'll use this data to create a line graph showing the average life expectancy by continent over time.
+Let's go back to the `gapminder_by_year_continent` dataframe that we created earlier. This is a dataframe with summary stats by continent and year. We'll use this data to create a **line graph** showing the average life expectancy by continent over time.
 
-**Quiz**:  
+---
+
+**Exercises**:  
 
 *  We have the **data** element already (`gapminder_by_year_continent`). What are the other two ggplot elements that we need to create a graphic?  
 *  What would be our `x=` and `y=` arguments in the aesthetic?  
 
 ```{r summary_ggplot_viz1, include=TRUE, echo=TRUE}
-gapminder_by_year_continent %>% 
+gapminder %>% 
+  group_by(country, year) %>% 
+  mutate(meanlifeExp = mean(lifeExp)) %>% 
   ggplot(aes(x=year,
              y=meanlifeExp,
+             group=country,
              color=continent)) + 
-  geom_line()
+  geom_line() + 
+  ggtitle('Life expectancy by continent over time',
+          subtitle = 'Gapminder dataset') + 
+  labs(x='Year',
+       y='Average life expectancy')
 ```
+
+---
 
 This plot shows us very clearly the gap between Africa and all other continents in life expectancy over time.
 
-**On your own**:  
+---
+
+**Exercises**:  
 
 *  Remove the `color=continent` argument from the previous plot? What happens, and why?  
+
+```{r summary_ggplot_viz1_2, include=TRUE, echo=TRUE, eval=FALSE}
+gapminder_by_year_continent %>% 
+  ggplot(aes(x=year,
+             y=meanlifeExp)) + 
+  geom_line()
+```
+
 *  Plot another one of the summarised variables from the `gapminder_by_year_continent` dataframe over time.  
 *  Using the `gapminder` dataframe, `filter()` the data on a country of your choice, and visualize a line plot over time (any variable you'd like).  
 
-```{r zambia_life_expectancy, include=FALSE}
+```{r zambia_life_expectancy, include=TRUE, echo=TRUE, eval=FALSE}
 ex_country <- c('Zambia', 'China', 'Argentina', 'Bulgaria')
 
 gapminder %>% 
@@ -356,7 +615,11 @@ gapminder %>%
   theme(legend.position = 'top')
 ```
 
-# Re-cap  
+---
+
+<br>
+
+# Re-cap and resources  
 
 If you've stayed with us this long, you've learned quite a few data management, manipulation, and visualization skills. The `dplyr` package has a collection of simple, yet powerful management and analysis tools, such as:  
 
@@ -369,61 +632,87 @@ If you've stayed with us this long, you've learned quite a few data management, 
 
 You've also learned how to use `ggplot2` to visualize your data, by specifying your **data**, **aesthetics**, and **geom**. You've learned two of the most common types of visualizations, the scatterplot and line plot, with `geom_point()` and `geom_line()`, respectively. You've also learned how to make small customizations to your graphics to improve the effectiveness and the amount of information contained in your visualizations, such as adding axis labels and a title, coloring your plot by another variable, and changing the scale of an axis. There are endless options/customizations within `ggplot2`, and it's an incremental process to reach mastery. (Hopefully, a future Pardee Methods Workshop will focus exclusively on visualizing data in R!)
 
-There are many other `dplyr` functions and ggplot customizations that we couldn't cover. 
+There are many other `dplyr` functions and `ggplot2` customizations that we couldn't cover. 
 
 *  `dplyr::select()` returns the variables, or columns, that you wish to work with.  
 *  `dplyr::rename()` allows you to change a variable name.  
 *  `dplyr::left_join()` and `dplyr::inner_join()` are the most common functions to join two related dataframes.  
 *  And there are dozens of other ggplot geoms and themes to take complete control over your graphics.  
 
+Some parting thoughts, borrowed from a data science blog:   
 
+>1. **Type everything**. I know you can just copy and paste from the tutorial, but do yourself a favor and type it out. You will start learning the subtleties of the syntax and get used to typing in new ways.  
+>2. **Break everything and make mistakes**. When you run code that gives you the results you want, don't stop there. Change the wording, change the symbols, try different combinations. You reinforce what is correct by understanding what is wrong and of course how to fix mistakes. Learning to fix mistakes is the fastest most effective way of learning programming (actually this is true when learning anything).  
+>3. **Teach others**. One way to make sure you understand a concept is to explain it to someone else.
+>http://cierareports.org/blog/2013/10/18/rCourse2013/
+
+There are TONS of great resources for learning R. You might check out:  
+
+*  Package vignettes are a great way to learn about a package or a particular function. Just type in "?InsertPackageName" or "?InsertFunctionName" (quotations excluded) to find information from R Studio's help panel. (**FREE**)
+*  R-bloggers[^5]  (**FREE**)  
+*  The John's Hopkins Data Science Coursera[^6] (**FREE** option available)  
+*  Swirl is an interactive course run through an R package[^7] (**FREE**)  
+*  R Studio hosts cheat sheets for some of the most common issues, packages, and functions -- including `dplyr` and `ggplot2`[^8] (**FREE**)  
+
+[^5]: https://www.r-bloggers.com/how-to-learn-r-2/  
+[^6]: https://www.coursera.org/specializations/jhu-data-science  
+[^7]: http://www.swirlstats.com/
+[^8]: https://www.rstudio.com/resources/cheatsheets/
+
+<br>
 
 # Analysis of U.S. Supreme Court data  
 
-I am providing a dataset on all U.S. Supreme Court decisions since 1946, which are organized by case and justice vote.[^2] I'd like for you to put together the skills that you've learned in this session to do some exploratory analysis of the data. 
+<center>
+
+![The U.S. Supreme Court](https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Oblique_facade_2%2C_US_Supreme_Court.jpg/1024px-Oblique_facade_2%2C_US_Supreme_Court.jpg)
+
+</center>
+
+I am providing a dataset on all U.S. Supreme Court decisions since 1946, which are organized by case and justice vote. These data come from The Supreme Court Database at the Washington University in St. Louis Law School.[^9] I'd like for you to put together the skills that you've learned in this session to do some exploratory analysis of the data. 
 
 First, let's look at the data together. Read in the data with the `read.csv()` function, and save it to an object called "sup_court". Then, use the `glimpse()` function to peek at the sup_court object.
 
-[^2]: http://scdb.wustl.edu/data.php
+[^9]: http://scdb.wustl.edu/data.php
 
-```{r glimpse_sup_court, include=TRUE, echo=TRUE}
+```{r read_sup_court, include=TRUE, echo=TRUE}
 sup_court <- read.csv('supreme_court_1946_2018.csv')
+```
 
+```{r glimpse_sup_court, include=TRUE}
 glimpse(sup_court)
 ```
 
-Explore the dataset on your own, and see what you can find! Try to ask a question of the dataset and come up with an answer. In case you want some examples to guide you, you might ask...
+---
+
+Explore the dataset on your own, and see what you can find! Try to ask a question of the dataset and come up with an answer. In case you want some examples to guide you, you might ask (the "Code" box is there if you are stuck, but try your best to do this on your own.)...
 
 *  Which Chief Justice has presided over the most cases since 1946? Which has heard the fewest?  
-*  How many decisions has Justice Gorsuch made in his short tenure on the bench? How often has he cast a dissenting opinion? How often has he made decisions that would be considered conservative? What types of cases has he heard most often to this point? (hint: Gorsuch can be found using the justiceName variable with **NMGorsuch**.) 
-*  Justice Kennedy has a reputation as being the swing voter on the Supreme Court. How might you test this conventional wisdom with this dataset? (hint: you might consider using the **majVotes** and **minVotes** variables for this question) 
-*  Which justice has heard the most Supreme Court Cases since 1946? (hint: the justice is the primary unit of analysis) 
-*  Justice Scalia was known as a staunch conservative presence on the bench. Were there some issues that he leaned more centrist? (hint: `group_by()` and `summarise()` would come in handy here, yet again)  
-*  What are the trends in the types of case heard by term? (hint: **BY term**)
 
-
-```{r sup_court_q1, include=FALSE}
+```{r sup_court_q1, include=TRUE, eval=FALSE}
 sup_court %>% 
   group_by(chief) %>% 
   summarise(count_cases = n()) %>% 
   arrange(desc(count_cases))
 ```
 
-```{r sup_court_q2_1, include=FALSE}
+*  How many decisions has Justice Gorsuch made in his short tenure on the bench? How often has he cast a dissenting opinion? How often has he made decisions that would be considered conservative? What types of cases has he heard most often to this point? (hint: Gorsuch can be found using the justiceName variable with **NMGorsuch**.) 
+
+```{r sup_court_q2_1, include=TRUE, eval=FALSE}
 sup_court %>% 
   filter(justiceName == 'NMGorsuch') %>% 
   group_by(justiceName) %>% 
   summarise(count_cases = n())
 ```
 
-```{r sup_court_q2_2, include=FALSE}
+```{r sup_court_q2_2, include=TRUE, eval=FALSE}
 sup_court %>% 
   filter(justiceName == 'NMGorsuch') %>% 
   group_by(justiceName, majorityName) %>% 
   summarise(count_cases = n())
 ```
 
-```{r sup_court_q2_3, include=FALSE}
+```{r sup_court_q2_3, include=TRUE, eval=FALSE}
 sup_court %>% 
   filter(justiceName == 'NMGorsuch') %>% 
   group_by(justiceName, directionName) %>% 
@@ -437,9 +726,12 @@ sup_court %>%
   summarise(count_cases = n()) %>% 
   mutate(perc_cases = round(count_cases / sum(count_cases) * 100, 1)) %>% 
   arrange(desc(perc_cases))
+
 ```
 
-```{r sup_court_q3, include=FALSE}
+*  Justice Kennedy has a reputation as being the swing voter on the Supreme Court. How might you test this conventional wisdom with this dataset? (hint: you might consider using the **majVotes** and **minVotes** variables for this question) 
+
+```{r sup_court_q3, include=TRUE, eval=FALSE}
 sup_court %>% 
   filter(majVotes == 5,
          minVotes == 4) %>% 
@@ -449,9 +741,130 @@ sup_court %>%
   arrange(desc(perc_cases))
 ```
 
-```{r sup_court_q4, include=FALSE}
+*  Which justice has heard the most Supreme Court Cases since 1946? (hint: the justice is the primary unit of analysis) 
+
+```{r sup_court_q4, include=TRUE, eval=FALSE}
 sup_court %>% 
   group_by(justiceName) %>% 
   summarise(count_cases = n()) %>% 
   arrange(desc(count_cases))
+```
+
+*  Justice Scalia was known as a staunch conservative presence on the bench. Were there some issues that he leaned more centrist? (hint: `group_by()` and `summarise()` would come in handy here, yet again)  
+*  What are the trends in the types of case heard by term? What is the trend in civil rights cases -- compared with other issue areas -- over time? (hint: **BY term and issue area**)
+
+```{r sup_court_term_issue_df, include=TRUE, eval=FALSE}
+(sup_court_term_issue <- sup_court %>% 
+  group_by(term, issueAreaName) %>% 
+  summarise(count_cases = n()) %>% 
+  arrange(term, desc(count_cases)))
+```
+
+```{r sup_court_issue_history_viz1, include=TRUE, eval=FALSE, fig.height=7}
+sup_court_term_issue %>% 
+  filter(!is.na(issueAreaName)) %>% 
+  ggplot(.) + 
+  geom_line(aes(x=term,
+                y=count_cases,
+                color=issueAreaName))
+```
+
+```{r sup_court_issue_history_viz2, include=TRUE, eval=FALSE, fig.height=7}
+sup_court_term_issue %>% 
+  filter(!is.na(issueAreaName)) %>% 
+  mutate(CivilRights = ifelse(issueAreaName=='Civil Rights', 'Civil Rights', 'Other')) %>% 
+  ggplot(.) + 
+  geom_line(aes(x=term,
+                y=count_cases,
+                group=issueAreaName,
+                color=CivilRights)) + 
+  scale_color_manual(values = c('Civil Rights' = 'darkgreen',
+                                'Other' = 'lightgray'))
+
+```
+
+---
+
+<br>
+
+# Joining datasets 
+
+(**Note: anticipating that we won't have enough time to cover joins in this session.**)
+
+Joining datasets might be one of the most valuable data wrangling skills that you can learn. More often than not, the data that you want to analyze don't live in a single dataframe, but are across two more more datasets. Joining datasets correctly and carefully helps ensure the integrity of the data.
+
+To demonstrate the joining functions of `dplyr`, we'll use a classic example with very small datasets that are pre-loaded in RStudio.[^10] Let's start by printing the `band_members` dataset (`print(band_members)`).
+
+[^10]: This example is used in dplyr's documentation on joins, found here: https://dplyr.tidyverse.org/reference/join.html
+
+```{r print_band_members, include=TRUE, echo=TRUE}
+print(band_members)
+```
+
+Let's say that, in this fictituous analysis, we want to explore the instruments played by band members. Print the `band_instruments` dataset.
+
+```{r print_band_instruments, include=TRUE, echo=FALSE}
+print(band_instruments)
+```
+
+You can see that `band_members` and `band_instruments` share a column, or variable -- **name**. We want to combine these tiny datasets to see the instruments played in the Beatles and the Stones.
+
+We'll learn three types of joins in this session, but there are several more that serve specific purposes. We will explore the use of the three most common joins:  
+
+*  **Inner joins**: a join that merges datasets, keeping only the common values of the two datasets (`dplr::inner_join()`).  
+*  **Left joins**: a join the merges datasets, keeping all the values in the "left" or 1st dataset and only the values in the "right" or 2nd dataset that have matching values in the left dataset (`dplyr::left_join()`).  
+*  **Anti joins**: a join that returns all unmatched values from the left dataset. This join is typically used for troubleshooting join issues and evaluating mismatched values in the two datasets (`dplr::anti_join()`).  
+
+<center>
+
+![Common data joins and their meaning](http://www.dofactory.com/Images/sql-joins.png)
+
+</center>
+
+Each of dplr's join functions (including the above) follow a similar structure and take the same arguments:  
+
+*  **x**: dataframe #1, or the "left" dataset,  
+*  **y**: dataframe #2, or the "right" dataset,  
+*  **by**: the variable or column that you want to join on. This can take multiple variables, as well as variables with different names.  
+
+First, let's do an inner join on `band_members` and `band_instruments`. These two datasets share a common variable -- **name** -- which will be the **by=** argument. 
+
+```{r inner_join_ex1, include=TRUE}
+inner_join(x=band_members,                     #dataframe 1
+           y=band_instruments,                 #dataframe 2
+           by='name')                          #variable to join dataframe 1 & 2 on (note: quotes required)
+```
+
+Our dataset included members from The Beatles and The Rolling Stones. So why did the inner join only return members of The Beatles?  Hint -- look closely at the names.
+
+What if we wanted to keep all records from the `band_members` dataset, but still join on `band_instruments`? 
+
+```{r left_join_ex1, include=TRUE}
+left_join(x=band_members,                     #dataframe 1
+           y=band_instruments,                 #dataframe 2
+           by='name')                          #variable to join dataframe 1 & 2 on (note: quotes required)
+```
+
+Because Mick Jagger is not in the `band_instruments` dataset, the **plays** column from the `left_join()` returns NA.
+
+Now, if you wanted to see which band members are not in both datasets, an `anti_join()` is very handy. What would you expect to see from an `anti_join()` on these two datasets?
+
+```{r anti_join_ex1, include=TRUE}
+anti_join(x=band_members,                      #dataframe 1
+           y=band_instruments,                 #dataframe 2
+           by='name')                          #variable to join dataframe 1 & 2 on (note: quotes required)
+```
+
+In each of these join examples, the **by=** argument remained the same. However, it is likely that the two datasets that you want to join do not share the *exact same* variable names to join on. Let's try a left join using `band_members` as the "left" dataset and `band_instruments2` as the "right" dataset. Before we try this join, we need to first look at the `band_instruments2` dataset.  
+
+```{r print_band_instruments2, include=TRUE, echo=FALSE}
+print(band_instruments2)
+```
+
+In `band_instruments2`, the two variables are now **artist** and **plays** (name is no longer a column name). So, let's tell `left_join()` that **name** and **artist** are the same variable, just with different column names.
+
+```{r left_join_ex2, include=TRUE, echo=TRUE}
+left_join(x=band_members,                   #dataframe 1
+          y=band_instruments2,              #dataframe 2
+          by=c('name' = 'artist'))           #variable to join dataframe 1 & 2 on (note: variables in list c())
 ```
