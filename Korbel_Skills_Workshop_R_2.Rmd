@@ -645,7 +645,7 @@ library(ggthemes)
 
 What if you wanted to show a story of the improvement of life expectancy over time? You might want to fit a linear regression model to your scatter plot. The code below demonstrates how this might be done, using the visualization theme from The Economist.  
 
-```{r mult_geoms, include=TRUE, echo=TRUE, eval=TRUE}
+```{r mult_geoms, include=TRUE, echo=TRUE, eval=TRUE, fig.height=6.2, fig.align='center'}
 gapminder %>% 
   mutate(generation=ifelse(year < 1970, '1950s-60s',
                     ifelse(year >= 1970 & year < 1990, '1970s-80s', '1990s-2000s'))) %>% 
@@ -807,7 +807,7 @@ sup_court %>%
   arrange(term, desc(count_cases)))
 ```
 
-```{r sup_court_issue_history_viz1, include=TRUE, echo=TRUE, eval=FALSE}
+```{r sup_court_issue_history_viz1, include=TRUE, echo=TRUE, eval=FALSE, fig.height=6.2, fig.align='center'}
 sup_court_term_issue %>% 
   filter(!is.na(issueAreaName)) %>% 
   ggplot(.) + 
@@ -816,7 +816,7 @@ sup_court_term_issue %>%
                 color=issueAreaName))
 ```
 
-```{r sup_court_issue_history_viz2, include=TRUE, echo=TRUE, eval=FALSE}
+```{r sup_court_issue_history_viz2, include=TRUE, echo=TRUE, eval=FALSE, fig.height=6.2, fig.align='center'}
 sup_court_term_issue %>% 
   filter(!is.na(issueAreaName)) %>% 
   mutate(CivilRights = ifelse(issueAreaName=='Civil Rights', 'Civil Rights', 'Other')) %>% 
