@@ -8,14 +8,14 @@ output:
     toc: yes
     graphics: yes
     fig.width: 7
-    fig.align: "center"
+    fig.align: 'center'
     code_folding: "hide"
   html_document:
     toc: yes
     toc_depth: 3
     graphics: yes
     fig.width: 7
-    fig.align: "center"
+    fig.align: 'center'
     code_folding: "hide"
 ---
 
@@ -475,7 +475,7 @@ What might explain the variation in life expectancy across countries (*think var
 *  Since scatter plots visualize **two** variables, we need to add a **`y=gdpPercap`** to our aesthetic.   
 *  Instead of using `geom_histogram()`, we will use `geom_point()` for a scatter plot.  
 
-```{r gapminder_scatter_1, include=TRUE, echo=TRUE, eval=TRUE}
+```{r gapminder_scatter_1, include=TRUE, echo=TRUE, eval=TRUE, fig.align='center'}
 gapminder %>%                           #DATA
   filter(year == 2007) %>%              #DATA
   ggplot(aes(x=gdpPercap,               #AESTHETICS
@@ -807,7 +807,7 @@ sup_court %>%
   arrange(term, desc(count_cases)))
 ```
 
-```{r sup_court_issue_history_viz1, include=TRUE, echo=TRUE, eval=FALSE, fig.height=7}
+```{r sup_court_issue_history_viz1, include=TRUE, echo=TRUE, eval=FALSE}
 sup_court_term_issue %>% 
   filter(!is.na(issueAreaName)) %>% 
   ggplot(.) + 
@@ -816,7 +816,7 @@ sup_court_term_issue %>%
                 color=issueAreaName))
 ```
 
-```{r sup_court_issue_history_viz2, include=TRUE, echo=TRUE, eval=FALSE, fig.height=7}
+```{r sup_court_issue_history_viz2, include=TRUE, echo=TRUE, eval=FALSE}
 sup_court_term_issue %>% 
   filter(!is.na(issueAreaName)) %>% 
   mutate(CivilRights = ifelse(issueAreaName=='Civil Rights', 'Civil Rights', 'Other')) %>% 
