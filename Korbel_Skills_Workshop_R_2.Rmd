@@ -280,16 +280,7 @@ When you are combining multiple functions, the power and clarity of piping becom
 
 <br>
 
-Without piping, you need to write this code inside-out! Does anyone actually find this easier?! You might think of piping as the Earnest Hemingway style of writing code in R (simple, yet powerful).
-
-<center>
-
-> "How did you go bankrupt?" Bill asked.  
-> "Two ways," Mike said. "Gradually and then suddenly."
-
-Earnest Hemingway in *The Sun Also Rises*
-
-</center>
+Without piping, you need to write this code inside-out! Does anyone actually find this easier?! 
 
 ---
 
@@ -439,12 +430,6 @@ gapminder %>%
 # Visualization with ggplot2  
 
 `ggplot2` is a tremendously flexible visualization package in R. "Gg" stands for the "grammar of graphics", which is an effort to build a language around how analysts define elements of a visualization. The rationale behind the development of `ggplot2` is simple. If you have a way of communicating elements of a data visualization **with precision**, then you can develop and collaborate more effectively.  
-
-<center>
-
-![Here for obvious reasons](https://upload.wikimedia.org/wikipedia/en/0/02/Phantomtollbooth.PNG)
-
-</center>
 
 There are three primary elements of `ggplot2` graphics:  
 
