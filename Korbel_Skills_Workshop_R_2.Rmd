@@ -143,6 +143,9 @@ Use the `summary()` command to produce a high-level statistical summary of the v
 ```{r summary_gapminder, include=TRUE, echo=TRUE}
 summary(gapminder)
 ```
+<br>
+
+>Before we start into the gapminder analysis, note that this is a **"cleaned"** dataset. There are no missing values, major issues with data types, or values that could be flagged as suspicious. That was a conscious choice for this workshop, so that we could get into data manipulation and visualization. In your own work, it is extremely likely that you will need to do more data preparation before analysis.  
 
 <br> 
 
@@ -451,30 +454,47 @@ There are three primary elements of `ggplot2` graphics:
 
 There are many, many types of visualizations supported, so mastering these elements unleashes a ton of possibilities.[^4] We will come back to each of the elements for every viz that we create.
 
-Let's begin with scatterplots. These are visualizations that show the relationship between two variables. Let's create a viz of the relationship between GDP per capita and life expectancy in 2007:  
+[^4]: This is a useful reference for learning about all of the geom options in ggplot. This might look overwhelming, but it is something that you pick up more as you move into more exotic visualization types. (http://ggplot2.tidyverse.org/reference/#section-layer-geoms)
+
+## Histograms
+
+Let's begin with **histograms**:  
 
 *  First, using the **piping** that we learned previously, filter the gapminder data to only include the 2007 rows.  
 *  Then, let's start defining the `ggplot2` elements (data, aesthetics, geoms). Click on the "Code" box below to walk through an example.
 
-[^4]: This is a useful reference for learning about all of the geom options in ggplot. This might look overwhelming, but it is something that you pick up more as you move into more exotic visualization types. (http://ggplot2.tidyverse.org/reference/#section-layer-geoms)
+```{r gapminder_histogram_1, include=TRUE, echo=TRUE, eval=TRUE}
+gapminder %>%                           #DATA
+  filter(year == 2007) %>%              #DATA
+  ggplot(aes(x=lifeExp)) +              #AESTHETICS
+  geom_histogram()                      #GEOM
+```
+
+Let's examine the code before we unpack the graphic:  
+
+*  You'll recall from the `dplyr` functions that we've learned so far that **piping** is an effective way to write code that flows between functions. First, we piped the gapminder data to `filter()`, then we piped that filtered dataframe to `ggplot()`.  
+*  Within ggplot's functions (`ggplot()` and `geom_histogram()`) we **always use a plus sign**. Think of ggplot as a canvas where the graphic is built by the addition of elements.  
+*  Then, we defined the aesthetics (`aes()`), or what we wanted to graph. In a histogram, you are simply visualizing the distribution of one variable, so you only need to tell ggplot which variable to visualize (within **x=**).  
+*  Finally, we added the **geom** to the aesthetic, which tells ggplot the type of graphic that we wanted to create (`geom_histogram()`).    
+
+We'll get more practice with ggplot's three elements -- data, aesthetics, and geoms -- as we go. 
+
+## Scatter plots  
+
+What might explain the variation in life expectancy across countries (*think variables from the Gapminder dataset*)? 
+
+**Scatter plots** show the relationship between two variables. Let's create a viz of the **relationship between GDP per capita and life expectancy in 2007**. Using the previous histogram code as our starting point, we would need to change two things:    
+
+*  Since scatter plots visualize **two** variables, we need to add a **`y=gdpPercap`** to our aesthetic.   
+*  Instead of using `geom_histogram()`, we will use `geom_point()` for a scatter plot.  
 
 ```{r gapminder_scatter_1, include=TRUE, echo=TRUE, eval=TRUE}
 gapminder %>%                           #DATA
   filter(year == 2007) %>%              #DATA
   ggplot(aes(x=gdpPercap,               #AESTHETICS
                  y=lifeExp)) +          #AESTHETICS
-  geom_point()
-  geom_smooth(method = "lm") #GEOM
+  geom_point()                          #GEOM
 ```
-
-Let's examine the code before we unpack the graphic:  
-
-*  You'll recall from the `dplyr` functions that we've learned so far that **piping** is an effective way to write code that flows between functions. First, we piped the gapminder data to `filter()`, then we piped that filtered dataframe to `ggplot()`.  
-*  Within ggplot's functions (`ggplot()` and `geom_point()`) we use a plus sign. Think of ggplot as a canvas where the graphic is built by the addition of elements.  
-*  Then, we defined the aesthetics (`aes()`), or what we wanted to graph.  
-*  Finally, we added the **geom** to the aesthetic, which tells ggplot the type of graphic that we wanted to create.  
-
-We'll get more practice with ggplot's three elements -- data, aesthetics, and geoms -- as we go.
 
 The graphic shows some interesting behavior:  
 
@@ -482,7 +502,7 @@ The graphic shows some interesting behavior:
 *  There is a saturating behavior in the data, meaning that at a certain average life expectancy (about 75 and up), income does not seem to have a strong relationship with life expectancy outcomes.  
 *  There appears to be a strong logarithmic relationship between these variables, meaning that the x-axis has a scale that increases in orders of magnitude (1,000 - 10,000 - 100,000).  
 
-The above graphic is very interesting. However, the gapminder dataset has additional information that could be put to use to extract more value from this viz. Let's see what this looks like when you color each point by the continent. To do this, you add `color=continent` to the aesthetic.
+The above graphic is very interesting. However, the gapminder dataset has additional information that could be put to use to extract more value from this viz. Let's see what this looks like when you color each point by the continent. To do this, add `color=continent` to the aesthetic.
 
 ```{r gapminder_scatter_2, include=TRUE, echo=TRUE}
 gapminder %>%                         #DATA
@@ -505,8 +525,9 @@ This illustrates that many of the poorest performing countries are located in Af
 gapminder %>%                         #DATA
   filter(year == 2007) %>%            #DATA
   ggplot(aes(x=gdpPercap,             #AESTHETIC
-             y=lifeExp)) +            #AESTHETIC    
-  geom_point(color="blue")            #GEOM
+             y=lifeExp,               #AESTHETIC
+             color="blue")) +         #AESTHETIC    
+  geom_point()                        #GEOM
 ```
 
 ---
@@ -531,15 +552,15 @@ gapminder %>%                             #DATA
 The `labs()` command in ggplot allows users to take control of the axis labels.  
 
 ```{r gapminder_scatter_4, include=TRUE, echo=TRUE}
-gapminder %>% 
-  filter(year == 2007) %>% 
-  ggplot(aes(x=gdpPercap,
-                 y=lifeExp,
-                 color=continent)) + 
-  geom_point() + 
-  scale_x_log10() + 
-  labs(x='GDP per capita (logged)',
-       y='Average life expectancy')
+gapminder %>%                             #DATA
+  filter(year == 2007) %>%                #DATA
+  ggplot(aes(x=gdpPercap,                 #AESTHETIC
+             y=lifeExp,                   #AESTHETIC
+             color=continent)) +          #AESTHETIC
+  geom_point() +                          #GEOM
+  scale_x_log10() +                       #CUSTOMIZING ELEMENT
+  labs(x='GDP per capita (logged)',       #CUSTOMIZING ELEMENT
+       y='Average life expectancy')       #CUSTOMIZING ELEMENT
 ```
 
 ---
@@ -551,9 +572,9 @@ gapminder %>%
 
 ---
 
-## Visualizing summary data 
+## Line plots 
 
-Let's go back to the `gapminder_by_year_continent` dataframe that we created earlier. This is a dataframe with summary stats by continent and year. We'll use this data to create a **line graph** showing the average life expectancy by continent over time.
+**Line plots** are typically used to visualize the behavior of a variable over some component of time. Let's go back to the `gapminder_by_year_continent` dataframe that we created earlier. This is a dataframe with summary stats by continent and year. We'll use this data to create a **line graph** showing the average life expectancy by continent over time.
 
 ---
 
@@ -562,13 +583,11 @@ Let's go back to the `gapminder_by_year_continent` dataframe that we created ear
 *  We have the **data** element already (`gapminder_by_year_continent`). What are the other two ggplot elements that we need to create a graphic?  
 *  What would be our `x=` and `y=` arguments in the aesthetic?  
 
-```{r summary_ggplot_viz1, include=TRUE, echo=TRUE}
-gapminder %>% 
-  group_by(country, year) %>% 
-  mutate(meanlifeExp = mean(lifeExp)) %>% 
+```{r summary_ggplot_viz1, include=TRUE, echo=TRUE, eval=FALSE}
+gapminder_by_year_continent %>% 
   ggplot(aes(x=year,
              y=meanlifeExp,
-             group=country,
+             group=continent,
              color=continent)) + 
   geom_line() + 
   ggtitle('Life expectancy by continent over time',
@@ -617,6 +636,46 @@ gapminder %>%
 
 ---
 
+## Extended use of ggplot2
+
+There are many, many ways that you can customize or expand your visualization repertoire by understanding the three basic elements of ggplot graphics:  
+
+ggplot element                          | Purpose
+--------------------------------------- | --------------------------------------------
+**Data**                                | The dataset that you want to visualize
+**Aesthetics**, or aesthetic mappings   | The variables from the dataset that you want to visualize (and how you want to visualize them)
+**Geoms**                               | The type of visualization that you want to create (scatter, bar plot, line plot, histogram, etc.)
+
+Here is a look at two other extensions (*you can just follow along*):  
+
+*  The `ggthemes` package allows for replicating the visualization themes of some major publications, including The Economist, The Wall Street Journal, and FiveThirtyEight.  
+*  You can also plot multiple geoms on the same graphic, which can be very useful in highlighting a story from your data.  
+
+```{r library_ggthemes, include=TRUE, echo=TRUE}
+#install.packages("ggthemes")
+library(ggthemes)
+```
+
+What if you wanted to show a story of the improvement of life expectancy over time? You might want to fit a linear regression model to your scatter plot. The code below demonstrates how this might be done, using the visualization theme from The Economist.  
+
+```{r mult_geoms, include=TRUE, echo=TRUE, eval=TRUE, fig.height=6.2}
+gapminder %>% 
+  mutate(generation=ifelse(year < 1970, '1950s-60s',
+                    ifelse(year >= 1970 & year < 1990, '1970s-80s', '1990s-2000s'))) %>% 
+  ggplot(aes(x=gdpPercap,
+                 y=lifeExp,
+                 color=generation)) + 
+  geom_point() + 
+  scale_x_log10() + 
+  geom_smooth(method = "lm", se=FALSE) + 
+  ggtitle('Relationship between GDP per capita, average life expectancy, and time') + 
+  labs(x='GDP per capita (logged)',
+       y='Average life expectancy',
+       color='',
+       caption='Gapminder dataset') + 
+  theme_economist()
+```
+
 <br>
 
 # Re-cap and resources  
@@ -653,11 +712,13 @@ There are TONS of great resources for learning R. You might check out:
 *  The John's Hopkins Data Science Coursera[^6] (**FREE** option available)  
 *  Swirl is an interactive course run through an R package[^7] (**FREE**)  
 *  R Studio hosts cheat sheets for some of the most common issues, packages, and functions -- including `dplyr` and `ggplot2`[^8] (**FREE**)  
+*  There are many ggplot galleries available online that might inspire you to learn new visualization types[^9] (**FREE**)
 
 [^5]: https://www.r-bloggers.com/how-to-learn-r-2/  
 [^6]: https://www.coursera.org/specializations/jhu-data-science  
 [^7]: http://www.swirlstats.com/
 [^8]: https://www.rstudio.com/resources/cheatsheets/
+[^9]: http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html 
 
 <br>
 
@@ -669,11 +730,11 @@ There are TONS of great resources for learning R. You might check out:
 
 </center>
 
-I am providing a dataset on all U.S. Supreme Court decisions since 1946, which are organized by case and justice vote. These data come from The Supreme Court Database at the Washington University in St. Louis Law School.[^9] I'd like for you to put together the skills that you've learned in this session to do some exploratory analysis of the data. 
+I am providing a dataset on all U.S. Supreme Court decisions since 1946, which are organized by case and justice vote. These data come from The Supreme Court Database at the Washington University in St. Louis Law School.[^10] I'd like for you to put together the skills that you've learned in this session to do some exploratory analysis of the data. 
 
 First, let's look at the data together. Read in the data with the `read.csv()` function, and save it to an object called "sup_court". Then, use the `glimpse()` function to peek at the sup_court object.
 
-[^9]: http://scdb.wustl.edu/data.php
+[^10]: http://scdb.wustl.edu/data.php
 
 ```{r read_sup_court, include=TRUE, echo=TRUE}
 sup_court <- read.csv('supreme_court_1946_2018.csv')
@@ -793,9 +854,9 @@ sup_court_term_issue %>%
 
 Joining datasets might be one of the most valuable data wrangling skills that you can learn. More often than not, the data that you want to analyze don't live in a single dataframe, but are across two more more datasets. Joining datasets correctly and carefully helps ensure the integrity of the data.
 
-To demonstrate the joining functions of `dplyr`, we'll use a classic example with very small datasets that are pre-loaded in RStudio.[^10] Let's start by printing the `band_members` dataset (`print(band_members)`).
+To demonstrate the joining functions of `dplyr`, we'll use a classic example with very small datasets that are pre-loaded in RStudio.[^11] Let's start by printing the `band_members` dataset (`print(band_members)`).
 
-[^10]: This example is used in dplyr's documentation on joins, found here: https://dplyr.tidyverse.org/reference/join.html
+[^11]: This example is used in dplyr's documentation on joins, found here: https://dplyr.tidyverse.org/reference/join.html
 
 ```{r print_band_members, include=TRUE, echo=TRUE}
 print(band_members)
