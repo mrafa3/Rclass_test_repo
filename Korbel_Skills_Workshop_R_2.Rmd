@@ -6,12 +6,14 @@ fontsize: 12pt
 output:
   html_notebook:
     toc: yes
+    graphics: yes
     fig.width: 7
     fig.align: "center"
     code_folding: "hide"
   html_document:
     toc: yes
     toc_depth: 3
+    graphics: yes
     fig.width: 7
     fig.align: "center"
     code_folding: "hide"
