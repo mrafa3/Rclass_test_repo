@@ -724,7 +724,7 @@ First, let's look at the data together. Read in the data with the `read.csv()` f
 [^10]: http://scdb.wustl.edu/data.php
 
 ```{r read_sup_court, include=TRUE, echo=TRUE}
-sup_court <- read.csv('supreme_court_1946_2018.csv')
+sup_court <- read.csv(url("https://github.com/mrafa3/korbel-skills-workshops/raw/master/supreme_court_1946_2018.csv"))
 ```
 
 ```{r glimpse_sup_court, include=TRUE, echo=TRUE}
