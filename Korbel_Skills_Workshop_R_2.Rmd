@@ -6,12 +6,15 @@ fontsize: 12pt
 output:
   html_notebook:
     toc: yes
+    toc_float: true
+    number_sections: true
     fig.width: 7
     fig.align: "center"
     code_folding: "hide"
   html_document:
     toc: yes
-    toc_depth: 3
+    toc_float: true
+    number_sections: true
     fig.width: 7
     fig.align: "center"
     code_folding: "hide"
@@ -248,23 +251,30 @@ gapminder %>%
 
 **Exercises**:
 
-*  You can also arrange by multiple variables with the `arrange()` function. Let's say that you want to arrange the gapminder data by year and by life expectancy. Try using `gapminder %>% arrange(year, lifeExp)`. What do you see?  
+*  You can also arrange by multiple variables with the `arrange()` function. Let's say that you want to arrange the gapminder data by year and by life expectancy. Try using `gapminder %>% arrange(year, lifeExp)`. What do you see? 
+
 <br>
+
 ```{r arrange_ex1, include=TRUE, echo=TRUE, eval=FALSE}
 gapminder %>% 
   arrange(year, lifeExp)
 ```
 
 *  Let's put the `filter()` and `arrange()` functions together. I'd like to see the **life expectancy of all Asian countries from the year 2000 to the most recent year, sorted in ascending order**. How might we do that?  
+
 <br>
+
 ```{r filter_arrange_combined, include=TRUE, echo=TRUE, eval=FALSE}
 gapminder %>% 
   filter(year >= 2000,
          continent == 'Asia') %>% 
   arrange(-lifeExp)
 ```
+
 <br>
+
 When you are combining multiple functions, the power and clarity of piping becomes more obvious. This is what the previous code would look like **without piping**.
+
 <br>
 
 <center>
@@ -273,8 +283,7 @@ When you are combining multiple functions, the power and clarity of piping becom
 
 <br>
 
-####**Who would like to try to read this?**
-
+**Who would like to try to read this?**
 
 </center>
 
@@ -282,7 +291,7 @@ When you are combining multiple functions, the power and clarity of piping becom
 
 Without piping, you need to write this code inside-out! Does anyone actually find this easier?! 
 
----
+<br>
 
 ## mutate()  
 
@@ -317,6 +326,8 @@ gapminder %>%
 ```
 
 ---
+
+<br>
 
 ## summarise()   
 
@@ -464,6 +475,8 @@ Let's examine the code before we unpack the graphic:
 
 We'll get more practice with ggplot's three elements -- data, aesthetics, and geoms -- as we go. 
 
+<br>
+
 ## Scatter plots  
 
 What might explain the variation in life expectancy across countries (*think variables from the Gapminder dataset*)? 
@@ -557,6 +570,8 @@ gapminder %>%                             #DATA
 
 ---
 
+<br>
+
 ## Line plots 
 
 **Line plots** are typically used to visualize the behavior of a variable over some component of time. Let's go back to the `gapminder_by_year_continent` dataframe that we created earlier. This is a dataframe with summary stats by continent and year. We'll use this data to create a **line graph** showing the average life expectancy by continent over time.
@@ -620,6 +635,8 @@ gapminder %>%
 ```
 
 ---
+
+<br>
 
 ## Extended use of ggplot2
 
