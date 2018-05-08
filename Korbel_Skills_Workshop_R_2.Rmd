@@ -174,7 +174,7 @@ Before we move on, let's take a closer look at the code above, because it uses a
 
 When reading your code, you can think of the **pipe operator (%>%)** as "THEN". To use the above example, take the gapminder dataframe, **THEN** return the distinct values in the year column. 
 
-Let's look at the **distinct continents** in the gapminder dataset. In your code chunk, relace `distinct(year)` with `distinct(continent)`.
+Let's look at the **distinct continents** in the gapminder dataset. In your code chunk, relace `distinct(year)` with `distinct(continent)`. Then, with your cursor on the same line as the code, **use the keyboard shortcut for running a block of code (Ctrl + Enter)**.
 
 ```{r distinct_continent, include=TRUE, echo=TRUE}
 gapminder %>% 
