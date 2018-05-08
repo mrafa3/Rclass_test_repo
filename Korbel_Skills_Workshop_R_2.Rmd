@@ -41,7 +41,7 @@ dplyr function                          | Purpose
 `dplyr::summarise()`                    | Reduces multiple values down to a single summary
 `dplyr::group_by()`                     | Groups observations by categorical variables for summary analysis
 
-We will use R's `ggplot2` package to create exploratory visualizations of data. This will give you the building blocks for creating beautiful visualizations. There are three common elements of ggplot graphics that you will learn how to use in this session, including:  
+`ggplot2` is a package for visualizing data. This will give you the building blocks for creating beautiful visualizations. There are three common elements of ggplot graphics that you will learn how to use in this session, including:  
 
 ggplot element                          | Purpose
 --------------------------------------- | --------------------------------------------
@@ -245,6 +245,12 @@ gapminder %>%
 #you could also do...
 #gapminder %>% 
 #  arrange(desc(gdpPercap))
+
+#or if you wanted to return the top X GDP per capita records
+#you could use the top_n() function from dplyr
+#gapminder %>%
+#  arrange(-gdpPercap) %>% 
+#  top_n(15, gdpPercap)
 ```
 
 ---
