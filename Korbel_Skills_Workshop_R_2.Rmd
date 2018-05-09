@@ -32,9 +32,9 @@ This workshop session will help you familiarize with two of R's most widely used
 
 `dplyr` is designed to standardize the data management and manipulation process in R. `dplyr` has a small set of functions that help users navigate the most common challenges of data manipulation.[^2]  Generally speaking, these include restructuring, filtering, grouping, and summarizing your data, as well as creating new variables for your analysis.  
 
-`ggplot2` is a package for visualizing data. In this lesson, we will learn the building blocks for creating beautiful visualizations. We will learn how to produce **scatter plots** and **line plots**, and we will visualize ungrouped and grouped data.  
+`ggplot2` is a package for visualizing data. In this lesson, we will learn the building blocks for creating beautiful visualizations. We will learn how to produce **histograms**, **scatter plots**, and **line plots**, and we will visualize ungrouped and grouped data.  
 
-`dplyr` and `ggplot2` are packages that supply a **grammar** for data manipulation and data visualization, respectively. This workshop will only scratch the surface of what is possible, but learning the fundamentals of these packages can empower you to do a ton of exciting things in R.
+`dplyr` and `ggplot2` are packages that supply a **grammar** for data manipulation and data visualization, respectively. This workshop will only scratch the surface of what is possible, but learning the fundamentals of these packages can empower you to do a ton of exciting things in R.  
 
 [^1]: https://www.tidyverse.org/packages/
 [^2]: https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html
