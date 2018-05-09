@@ -1,5 +1,5 @@
 ---
-title: "Korbel Skills Workshop: Data Manipulation and Visualization Basics using R"
+title: "Pardee Skills Workshop: Data Manipulation and Visualization Basics using R"
 author: "Mickey Rafa"
 date: "May 15, 2018"
 fontsize: 12pt
