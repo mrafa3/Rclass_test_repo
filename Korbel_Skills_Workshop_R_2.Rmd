@@ -450,7 +450,7 @@ Let's begin with **histograms**:
 *  First, using the **piping** that we learned previously, filter the gapminder data to only include the 2007 rows.  
 *  Then, let's start defining the `ggplot2` elements (data, aesthetics, geoms). Click on the "Code" box below to walk through an example.
 
-```{r gapminder_histogram_1, include=TRUE, echo=TRUE, eval=TRUE}
+```{r gapminder_histogram_1, include=TRUE, echo=TRUE, eval=TRUE, fig.height=6.2, fig.align='center'}
 gapminder %>%                           #DATA
   filter(year == 2007) %>%              #DATA
   ggplot(aes(x=lifeExp)) +              #AESTHETICS
@@ -477,7 +477,7 @@ What might explain the variation in life expectancy across countries (*think var
 *  Since scatter plots visualize **two** variables, we need to add a **`y=gdpPercap`** to our aesthetic.   
 *  Instead of using `geom_histogram()`, we will use `geom_point()` for a scatter plot.  
 
-```{r gapminder_scatter_1, include=TRUE, echo=TRUE, eval=TRUE, fig.align='center'}
+```{r gapminder_scatter_1, include=TRUE, echo=TRUE, eval=TRUE, fig.height=6.2, fig.align='center'}
 gapminder %>%                           #DATA
   filter(year == 2007) %>%              #DATA
   ggplot(aes(x=gdpPercap,               #AESTHETICS
@@ -493,7 +493,7 @@ The graphic shows some interesting behavior:
 
 The above graphic is very interesting. However, the gapminder dataset has additional information that could be put to use to extract more value from this viz. Let's see what this looks like when you color each point by the continent. To do this, add `color=continent` to the aesthetic.
 
-```{r gapminder_scatter_2, include=TRUE, echo=TRUE}
+```{r gapminder_scatter_2, include=TRUE, echo=TRUE, fig.height=6.2, fig.align='center'}
 gapminder %>%                         #DATA
   filter(year == 2007) %>%            #DATA
   ggplot(aes(x=gdpPercap,             #AESTHETIC
@@ -510,7 +510,7 @@ This illustrates that many of the poorest performing countries are located in Af
 
 *  Set `color="blue"` in the previous code. What do you see? Why do you think that is happening?  
 
-```{r gapminder_scatter_2_2, include=TRUE, eval=FALSE, echo=TRUE}
+```{r gapminder_scatter_2_2, include=TRUE, eval=FALSE, echo=TRUE, fig.height=6.2, fig.align='center'}
 gapminder %>%                         #DATA
   filter(year == 2007) %>%            #DATA
   ggplot(aes(x=gdpPercap,             #AESTHETIC
@@ -528,7 +528,7 @@ There are dozens of ways that you can customize `ggplot2` visualizations. With e
 
 To transform the x-axis to a logarithmic scale, simply add `scale_x_log10()` to the previous visualization's code. This will compress the x-axis and show a more linear relationship than the previous graphic.
 
-```{r gapminder_scatter_3, include=TRUE, echo=TRUE}
+```{r gapminder_scatter_3, include=TRUE, echo=TRUE, fig.height=6.2, fig.align='center'}
 gapminder %>%                             #DATA
   filter(year == 2007) %>%                #DATA
   ggplot(aes(x=gdpPercap,                 #AESTHETIC
@@ -540,7 +540,7 @@ gapminder %>%                             #DATA
 
 The `labs()` command in ggplot allows users to take control of the axis labels.  
 
-```{r gapminder_scatter_4, include=TRUE, echo=TRUE}
+```{r gapminder_scatter_4, include=TRUE, echo=TRUE, fig.height=6.2, fig.align='center'}
 gapminder %>%                             #DATA
   filter(year == 2007) %>%                #DATA
   ggplot(aes(x=gdpPercap,                 #AESTHETIC
@@ -574,7 +574,7 @@ gapminder %>%                             #DATA
 *  We have the **data** element already (`gapminder_by_year_continent`). What are the other two ggplot elements that we need to create a graphic?  
 *  What would be our `x=` and `y=` arguments in the aesthetic?  
 
-```{r summary_ggplot_viz1, include=TRUE, echo=TRUE, eval=FALSE}
+```{r summary_ggplot_viz1, include=TRUE, echo=TRUE, eval=FALSE, fig.height=6.2, fig.align='center'}
 gapminder_by_year_continent %>% 
   ggplot(aes(x=year,
              y=meanlifeExp,
@@ -597,7 +597,7 @@ This plot shows us very clearly the gap between Africa and all other continents 
 
 *  Remove the `color=continent` argument from the previous plot? What happens, and why?  
 
-```{r summary_ggplot_viz1_2, include=TRUE, echo=TRUE, eval=FALSE}
+```{r summary_ggplot_viz1_2, include=TRUE, echo=TRUE, eval=FALSE, fig.height=6.2, fig.align='center'}
 gapminder_by_year_continent %>% 
   ggplot(aes(x=year,
              y=meanlifeExp)) + 
@@ -607,7 +607,7 @@ gapminder_by_year_continent %>%
 *  Plot another one of the summarised variables from the `gapminder_by_year_continent` dataframe over time.  
 *  Using the `gapminder` dataframe, `filter()` the data on a country of your choice, and visualize a line plot over time (any variable you'd like).  
 
-```{r zambia_life_expectancy, include=TRUE, echo=TRUE, eval=FALSE}
+```{r zambia_life_expectancy, include=TRUE, echo=TRUE, eval=FALSE, fig.height=6.2, fig.align='center'}
 ex_country <- c('Zambia', 'China', 'Argentina', 'Bulgaria')
 
 gapminder %>% 
