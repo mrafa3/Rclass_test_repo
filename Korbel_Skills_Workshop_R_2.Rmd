@@ -30,24 +30,9 @@ This workshop session will help you familiarize with two of R's most widely used
 
 </center>
 
-`dplyr` is designed to standardize the data management and manipulation process in R. `dplyr` has a small set of functions (which may be more easily thought of as verbs) which are designed to help users navigate the most common challenges of data manipulation.[^2] These are:  
+`dplyr` is designed to standardize the data management and manipulation process in R. `dplyr` has a small set of functions that help users navigate the most common challenges of data manipulation.[^2]  Generally speaking, these include restructuring, filtering, grouping, and summarizing your data, as well as creating new variables for your analysis.  
 
-dplyr function                          | Purpose
---------------------------------------- | ---------------------------------------------
-`dplyr::distinct()`                     | Returns the unique values of a variable
-`dplyr::filter()`                       | Returns the observations, or rows, based on logic that you determine
-`dplyr::arrange()`                      | Changes the ordering of the rows
-`dplyr::mutate()`                       | Adds new variables that are functions of existing variables
-`dplyr::summarise()`                    | Reduces multiple values down to a single summary
-`dplyr::group_by()`                     | Groups observations by categorical variables for summary analysis
-
-`ggplot2` is a package for visualizing data. This will give you the building blocks for creating beautiful visualizations. There are three common elements of ggplot graphics that you will learn how to use in this session, including:  
-
-ggplot element                          | Purpose
---------------------------------------- | --------------------------------------------
-**Data**                                | The dataset that you want to visualize
-**Aesthetics**, or aesthetic mappings   | The variables from the dataset that you want to visualize (and how you want to visualize them)
-**Geoms**                               | The type of visualization that you want to create (scatter, bar plot, line plot, histogram, etc.)
+`ggplot2` is a package for visualizing data. In this lesson, we will learn the building blocks for creating beautiful visualizations. We will learn how to produce **scatter plots** and **line plots**, and we will visualize ungrouped and grouped data.  
 
 `dplyr` and `ggplot2` are packages that supply a **grammar** for data manipulation and data visualization, respectively. This workshop will only scratch the surface of what is possible, but learning the fundamentals of these packages can empower you to do a ton of exciting things in R.
 
@@ -688,18 +673,30 @@ gapminder %>%
 
 # Re-cap and resources  
 
-If you've stayed with us this long, you've learned quite a few data management, manipulation, and visualization skills. The `dplyr` package has a collection of simple, yet powerful management and analysis tools, such as:  
+If you've stayed with us this long, you've learned quite a few data management, manipulation, and visualization skills. The `dplyr` package has a collection of simple, yet powerful management and analysis tools. In this esssion, you practiced the following:  
 
-*  `distinct()` returns the unique values of a variable.  
-*  `filter()` picks cases based on their values.  
-*  `arrange()` changes the ordering of the rows.
-*  `mutate()` adds new variables that are functions of existing variables. These are often referred to as "derived" variables.  
-*  `summarise()` reduces multiple values down to a single summary.  
-*  `group_by()` -- when combined with the `summarise()` function -- allows you to compute summary statistics by grouping variables.  
+dplyr function                          | Purpose
+--------------------------------------- | ---------------------------------------------
+`dplyr::distinct()`                     | Returns the unique values of a variable
+`dplyr::filter()`                       | Returns the observations, or rows, based on logic that you determine
+`dplyr::arrange()`                      | Changes the ordering of the rows
+`dplyr::mutate()`                       | Adds new variables that are functions of existing variables
+`dplyr::summarise()`                    | Reduces multiple values down to a single summary
+`dplyr::group_by()`                     | Groups observations by categorical variables for summary analysis
 
-You've also learned how to use `ggplot2` to visualize your data, by specifying your **data**, **aesthetics**, and **geom**. You've learned two of the most common types of visualizations, the scatterplot and line plot, with `geom_point()` and `geom_line()`, respectively. You've also learned how to make small customizations to your graphics to improve the effectiveness and the amount of information contained in your visualizations, such as adding axis labels and a title, coloring your plot by another variable, and changing the scale of an axis. There are endless options/customizations within `ggplot2`, and it's an incremental process to reach mastery. (Hopefully, a future Pardee Methods Workshop will focus exclusively on visualizing data in R!)
 
-There are many other `dplyr` functions and `ggplot2` customizations that we couldn't cover. 
+You've also learned how to use `ggplot2` to visualize your data, by specifying the main elements of ggplot graphics:   
+
+ggplot element                          | Purpose
+--------------------------------------- | --------------------------------------------
+**Data**                                | The dataset that you want to visualize
+**Aesthetics**, or aesthetic mappings   | The variables from the dataset that you want to visualize (and how you want to visualize them)
+**Geoms**                               | The type of visualization that you want to create (scatter, bar plot, line plot, histogram, etc.)
+
+
+Finally, you've learned two of the most common types of visualizations, the scatterplot and line plot, with `geom_point()` and `geom_line()`, respectively. You've learned how to make small customizations to your graphics to improve the effectiveness and the amount of information contained in your visualizations, such as adding axis labels and a title, coloring your plot by another variable, and changing the scale of an axis. There are endless options/customizations within `ggplot2`, and it's an incremental process to reach mastery. (Hopefully, a future Pardee Methods Workshop will focus exclusively on visualizing data in R!)
+
+There are many other `dplyr` functions and `ggplot2` customizations that we couldn't cover, such as:   
 
 *  `dplyr::select()` returns the variables, or columns, that you wish to work with.  
 *  `dplyr::rename()` allows you to change a variable name.  
