@@ -554,9 +554,8 @@ gapminder %>%                             #DATA
 
 ---
 
-**Exercises**:  
+**Exercise**:  
 
-*  Search Google to find out how to add a title to your ggplot graphic.  
 *  Create another scatterplot with another variable combination from the gapminder dataset.  
 
 ---
@@ -594,15 +593,6 @@ This plot shows us very clearly the gap between Africa and all other continents 
 ---
 
 **Exercises**:  
-
-*  Remove the `color=continent` argument from the previous plot? What happens, and why?  
-
-```{r summary_ggplot_viz1_2, include=TRUE, echo=TRUE, eval=FALSE, fig.height=6.2, fig.align='center'}
-gapminder_by_year_continent %>% 
-  ggplot(aes(x=year,
-             y=meanlifeExp)) + 
-  geom_line()
-```
 
 *  Plot another one of the summarised variables from the `gapminder_by_year_continent` dataframe over time.  
 *  Using the `gapminder` dataframe, `filter()` the data on a country of your choice, and visualize a line plot over time (any variable you'd like).  
