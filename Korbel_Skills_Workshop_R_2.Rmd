@@ -820,48 +820,63 @@ sup_court %>%
 ```{r sup_court_scalia_issues, include=TRUE, echo=TRUE, eval=FALSE, fig.height=10}
 sup_court %>% 
   filter(justiceName == 'AScalia') %>% 
-  filter(term > 1980) %>% 
   group_by(justiceName, issueAreaName, directionName) %>% 
   summarise(count_cases = n()) %>% 
   mutate(perc_cases = round(count_cases / sum(count_cases) *100, 1)) %>% 
   filter(directionName == 'liberal') %>% 
   arrange(-perc_cases)
-
-#note: to truly answer questions such as this, you would want to take into account the directionality of 
-#all voting justices. Do we know whether a 69% for Federal Taxation cases makes Scalia left-leaning?
 ```
 
-*  Since 1980, how have all Supreme Court justices voted along *The Supreme Court Database's* liberal/conservative coding schema across issue areas?
+* To truly answer a question like the previous one, you would want to take into account the directionality of 
+all voting justices by issue area. For instance, if you explored the previous question, you found that Scalia voted "liberal" on almost 70% of Federal Taxation cases. But does the court "lean" one way or another based on the type of case? This question is a bit more complicated, but does Scalia *lean liberal* based on the Court's tendencies in Federal Taxation Cases? (*This question still uses `dplyr` -- and if you'd like, `ggplot2` -- but with a few bells and whistles.*)
 
-```{r liberal_lean_1980, include=TRUE, echo=TRUE, eval=FALSE, fig.height=11}
-sup_court %>% 
+```{r baseline_vote_fedtax, include=TRUE, echo=TRUE, eval=TRUE, fig.height=7}
+baseline_vote <- sup_court %>% 
   filter(term > 1980) %>% 
+  mutate(liberal_vote = ifelse(directionName == 'liberal', 1,
+                        ifelse(directionName == 'conservative', 0, NA))) %>% 
+  group_by(issueAreaName) %>% 
+  summarise(baseline_issue_vote = round(mean(liberal_vote, na.rm = TRUE) * 100, 1)) %>% 
+  filter(!is.na(baseline_issue_vote)) %>% 
+  arrange(-baseline_issue_vote) %>% 
+  ungroup()
+
+sup_court_fedtax <- sup_court %>% 
+  filter(term > 1980, issueAreaName == 'Federal Taxation') %>% 
   group_by(justiceName, issueAreaName, directionName) %>% 
   summarise(count_cases = n()) %>% 
   mutate(perc_cases = round(count_cases / sum(count_cases) *100, 1)) %>% 
   filter(directionName == 'liberal') %>% 
   arrange(-perc_cases) %>% 
+  ungroup() %>% 
+  left_join(x=.,
+            y=baseline_vote,
+            by='issueAreaName')
+
+sup_court_fedtax %>% 
+  mutate(fedtax_lean = ifelse(perc_cases > baseline_issue_vote, 'Liberal', 'Conservative')) %>% 
   ggplot(.) + 
-  facet_wrap(~justiceName) + 
   geom_point(aes(x=perc_cases,
-                 y=reorder(issueAreaName, perc_cases)), color='blue', size=3) +   # Draw points
-  geom_vline(xintercept = 50) + 
-  ggtitle('Percent of cases with liberal ruling by Justice and Issue Area',
-          subtitle = 'Since 1980') +
-  labs(y='',
-       x='Percent of cases with liberal ruling',
-       caption="Source: Washing University at St. Louis\nThe Supreme Court Database") + 
+                 y=reorder(justiceName, perc_cases),
+                 color=fedtax_lean), size=5) + 
+  geom_vline(xintercept = sup_court_fedtax$baseline_issue_vote) + 
+  annotate(geom='text', x=50, y='SSotomayor', label='Baseline vote for Federal Taxation cases', size=5) + 
+  scale_x_continuous(limits = c(0, 100)) + 
+  ggtitle('Percent of Federal Taxation cases with liberal decision by Justice since 1980',
+          subtitle = "The Court leans liberal on Federal Taxation cases") + 
+  labs(x='Percent of cases with liberal decision',
+       y='',
+       color='',
+       caption='Source: Washington University of St. Louis\nThe Supreme Court Database') + 
   theme_minimal() + 
-  theme(legend.position = 'none',
+  scale_color_manual(values = c('Liberal' = 'blue',
+                                'Conservative' = 'red')) + 
+  theme(legend.position = 'top',
         text = element_text(size=15),
         plot.title = element_text(size=18, face='bold'),
         plot.subtitle = element_text(size=16),
         strip.text = element_text(size=15, face='bold'))
-
-#this is a small multiple plot, which is often useful for exploring these kinds of questions
-#facet_wrap() makes this pretty simple
 ```
-
 
 *  What are the trends in the types of case heard by term? What is the trend in civil rights cases -- compared with other issue areas -- over time? (hint: **BY term and issue area**)
 
