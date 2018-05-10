@@ -673,7 +673,7 @@ gapminder %>%
 
 # Re-cap and resources  
 
-If you've stayed with us this long, you've learned quite a few data management, manipulation, and visualization skills. The `dplyr` package has a collection of simple, yet powerful management and analysis tools. In this esssion, you practiced the following:  
+If you've stayed with us this long, you've learned quite a few data management, manipulation, and visualization skills. The `dplyr` package has a collection of simple, yet powerful management and analysis tools. In this session, you practiced the following:  
 
 dplyr function                          | Purpose
 --------------------------------------- | ---------------------------------------------
