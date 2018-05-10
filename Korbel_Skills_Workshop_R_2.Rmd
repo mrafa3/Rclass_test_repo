@@ -694,7 +694,7 @@ ggplot element                          | Purpose
 **Geoms**                               | The type of visualization that you want to create (scatter, bar plot, line plot, histogram, etc.)
 
 
-Finally, you've learned two of the most common types of visualizations, the scatterplot and line plot, with `geom_point()` and `geom_line()`, respectively. You've learned how to make small customizations to your graphics to improve the effectiveness and the amount of information contained in your visualizations, such as adding axis labels and a title, coloring your plot by another variable, and changing the scale of an axis. There are endless options/customizations within `ggplot2`, and it's an incremental process to reach mastery. (Hopefully, a future Pardee Methods Workshop will focus exclusively on visualizing data in R!)
+Finally, you've learned three of the most common types of visualizations -- histograms, scatterplots and line plots -- with `geom_histogram()`, `geom_point()`, and `geom_line()`, respectively. You've learned how to make small customizations to your graphics to improve the effectiveness and the amount of information contained in your visualizations, such as adding axis labels and a title, coloring your plot by another variable, and changing the scale of an axis. There are endless options/customizations within `ggplot2`, and it's an incremental process to reach mastery. (Hopefully, a future Pardee Methods Workshop will focus exclusively on visualizing data in R!)
 
 There are many other `dplyr` functions and `ggplot2` customizations that we couldn't cover, such as:   
 
@@ -713,7 +713,7 @@ Some parting thoughts, borrowed from a data science blog:
 There are TONS of great resources for learning R. You might check out:  
 
 *  Package vignettes are a great way to learn about a package or a particular function. Just type in "?InsertPackageName" or "?InsertFunctionName" (quotations excluded) to find information from R Studio's help panel. (**FREE**)
-*  R-bloggers[^5]  (**FREE**)  
+*  R-bloggers - "How to Learn R"[^5]  (**FREE**)  
 *  The John's Hopkins Data Science Coursera[^6] (**FREE** option available)  
 *  Swirl is an interactive course run through an R package[^7] (**FREE**)  
 *  R Studio hosts cheat sheets for some of the most common issues, packages, and functions -- including `dplyr` and `ggplot2`[^8] (**FREE**)  
