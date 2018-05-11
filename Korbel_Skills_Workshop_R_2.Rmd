@@ -805,6 +805,37 @@ sup_court %>%
   arrange(desc(count_cases))
 ```
 
+*  What are the trends in the types of case heard by term? What is the trend in civil rights cases -- compared with other issue areas -- over time? (hint: **BY term and issue area**)
+
+```{r sup_court_term_issue_df, include=TRUE, echo=TRUE, eval=FALSE}
+(sup_court_term_issue <- sup_court %>% 
+  group_by(term, issueAreaName) %>% 
+  summarise(count_cases = n()) %>% 
+  arrange(term, desc(count_cases)))
+```
+
+```{r sup_court_issue_history_viz1, include=TRUE, echo=TRUE, eval=FALSE, fig.height=6.2, fig.align='center'}
+sup_court_term_issue %>% 
+  filter(!is.na(issueAreaName)) %>% 
+  ggplot(.) + 
+  geom_line(aes(x=term,
+                y=count_cases,
+                color=issueAreaName))
+```
+
+```{r sup_court_issue_history_viz2, include=TRUE, echo=TRUE, eval=FALSE, fig.height=6.2, fig.align='center'}
+sup_court_term_issue %>% 
+  filter(!is.na(issueAreaName)) %>% 
+  mutate(CivilRights = ifelse(issueAreaName=='Civil Rights', 'Civil Rights', 'Other')) %>% 
+  ggplot(.) + 
+  geom_line(aes(x=term,
+                y=count_cases,
+                group=issueAreaName,
+                color=CivilRights)) + 
+  scale_color_manual(values = c('Civil Rights' = 'darkgreen',
+                                'Other' = 'lightgray'))
+```
+
 *  Does the Court seem to have strong tendencies for votes based on the issue area? (*Probably many ways that you could think about answering this one.*)
 
 ```{r baseline_vote, include=TRUE, echo=TRUE, eval=FALSE, fig.height=7}
@@ -880,43 +911,11 @@ sup_court_fedtax %>%
         strip.text = element_text(size=15, face='bold'))
 ```
 
-*  What are the trends in the types of case heard by term? What is the trend in civil rights cases -- compared with other issue areas -- over time? (hint: **BY term and issue area**)
-
-```{r sup_court_term_issue_df, include=TRUE, echo=TRUE, eval=FALSE}
-(sup_court_term_issue <- sup_court %>% 
-  group_by(term, issueAreaName) %>% 
-  summarise(count_cases = n()) %>% 
-  arrange(term, desc(count_cases)))
-```
-
-```{r sup_court_issue_history_viz1, include=TRUE, echo=TRUE, eval=FALSE, fig.height=6.2, fig.align='center'}
-sup_court_term_issue %>% 
-  filter(!is.na(issueAreaName)) %>% 
-  ggplot(.) + 
-  geom_line(aes(x=term,
-                y=count_cases,
-                color=issueAreaName))
-```
-
-```{r sup_court_issue_history_viz2, include=TRUE, echo=TRUE, eval=FALSE, fig.height=6.2, fig.align='center'}
-sup_court_term_issue %>% 
-  filter(!is.na(issueAreaName)) %>% 
-  mutate(CivilRights = ifelse(issueAreaName=='Civil Rights', 'Civil Rights', 'Other')) %>% 
-  ggplot(.) + 
-  geom_line(aes(x=term,
-                y=count_cases,
-                group=issueAreaName,
-                color=CivilRights)) + 
-  scale_color_manual(values = c('Civil Rights' = 'darkgreen',
-                                'Other' = 'lightgray'))
-
-```
-
 ---
 
 <br>
 
-# Joining datasets 
+# Bonus material: joining datasets 
 
 (**Note: anticipating that we won't have enough time to cover joins in this session.**)
 
