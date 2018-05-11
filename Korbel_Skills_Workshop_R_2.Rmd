@@ -873,7 +873,6 @@ sup_court_fedtax <- sup_court %>%
   summarise(count_cases = n()) %>% 
   mutate(perc_cases = count_cases / sum(count_cases)) %>% 
   filter(directionName == 'liberal') %>% 
-  arrange(-perc_cases) %>% 
   ungroup() %>% 
   left_join(x=.,
             y=baseline_vote,
@@ -882,7 +881,7 @@ sup_court_fedtax <- sup_court %>%
 library(scales)                 #for changing axis label to include '%'
 
 sup_court_fedtax %>% 
-  filter(!is.na(count_cases) & count_cases >=10) %>% 
+  filter(count_cases >=10) %>% 
   mutate(fedtax_lean = ifelse(perc_cases > baseline_issue_vote, 'Liberal', 'Conservative')) %>% 
   ggplot(.) + 
   geom_point(aes(x=perc_cases,
