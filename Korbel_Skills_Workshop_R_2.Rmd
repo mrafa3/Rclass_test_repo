@@ -624,12 +624,13 @@ gapminder %>%
 There are many, many ways that you can customize or expand your visualization repertoire by understanding the three basic elements of ggplot graphics. Here is a look at two other extensions (*you can just follow along*):  
 
 *  The `ggthemes` package allows for replicating the visualization themes of some major publications, including The Economist, The Wall Street Journal, and FiveThirtyEight.  
-*  You can also plot multiple geoms on the same graphic, which can be very useful in highlighting a story from your data.  
 
 ```{r library_ggthemes, include=TRUE, echo=TRUE}
 #install.packages("ggthemes")
 library(ggthemes)
 ```
+
+*  You can also plot multiple geoms on the same graphic, which can be very useful in highlighting a story from your data.  
 
 What if you wanted to show a story of the improvement of life expectancy over time? You might want to fit a linear regression model to your scatter plot. The code below demonstrates how this might be done, using the visualization theme from The Economist.  
 
@@ -685,13 +686,6 @@ There are many other `dplyr` functions and `ggplot2` customizations that we coul
 *  `dplyr::left_join()` and `dplyr::inner_join()` are the most common functions to join two related dataframes.  
 *  And there are dozens of other ggplot geoms and themes to take complete control over your graphics.  
 
-Some parting thoughts, borrowed from a data science blog:   
-
->1. **Type everything**. I know you can just copy and paste from the tutorial, but do yourself a favor and type it out. You will start learning the subtleties of the syntax and get used to typing in new ways.  
->2. **Break everything and make mistakes**. When you run code that gives you the results you want, don't stop there. Change the wording, change the symbols, try different combinations. You reinforce what is correct by understanding what is wrong and of course how to fix mistakes. Learning to fix mistakes is the fastest most effective way of learning programming (actually this is true when learning anything).  
->3. **Teach others**. One way to make sure you understand a concept is to explain it to someone else.
->http://cierareports.org/blog/2013/10/18/rCourse2013/
-
 There are TONS of great resources for learning R. You might check out:  
 
 *  Package vignettes are a great way to learn about a package or a particular function. Just type in "?InsertPackageName" or "?InsertFunctionName" (quotations excluded) to find information from R Studio's help panel. (**FREE**)
@@ -700,6 +694,13 @@ There are TONS of great resources for learning R. You might check out:
 *  Swirl is an interactive course run through an R package[^7] (**FREE**)  
 *  R Studio hosts cheat sheets for some of the most common issues, packages, and functions -- including `dplyr` and `ggplot2`[^8] (**FREE**)  
 *  There are many ggplot galleries available online that might inspire you to learn new visualization types[^9] (**FREE**)
+
+Some parting thoughts, borrowed from a data science blog:   
+
+>1. **Type everything**. I know you can just copy and paste from the tutorial, but do yourself a favor and type it out. You will start learning the subtleties of the syntax and get used to typing in new ways.  
+>2. **Break everything and make mistakes**. When you run code that gives you the results you want, don't stop there. Change the wording, change the symbols, try different combinations. You reinforce what is correct by understanding what is wrong and of course how to fix mistakes. Learning to fix mistakes is the fastest most effective way of learning programming (actually this is true when learning anything).  
+>3. **Teach others**. One way to make sure you understand a concept is to explain it to someone else.
+>http://cierareports.org/blog/2013/10/18/rCourse2013/
 
 [^5]: https://www.r-bloggers.com/how-to-learn-r-2/  
 [^6]: https://www.coursera.org/specializations/jhu-data-science  
