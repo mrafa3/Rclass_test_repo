@@ -625,7 +625,7 @@ There are many, many ways that you can customize or expand your visualization re
 
 *  The `ggthemes` package allows for replicating the visualization themes of some major publications, including The Economist, The Wall Street Journal, and FiveThirtyEight.  
 
-```{r library_ggthemes, include=TRUE, echo=TRUE}
+```{r library_ggthemes, include=TRUE, echo=TRUE, message=FALSE}
 #install.packages("ggthemes")
 library(ggthemes)
 ```
