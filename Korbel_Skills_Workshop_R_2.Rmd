@@ -621,15 +621,7 @@ gapminder %>%
 
 ## Extended use of ggplot2
 
-There are many, many ways that you can customize or expand your visualization repertoire by understanding the three basic elements of ggplot graphics:  
-
-ggplot element                          | Purpose
---------------------------------------- | --------------------------------------------
-**Data**                                | The dataset that you want to visualize
-**Aesthetics**, or aesthetic mappings   | The variables from the dataset that you want to visualize (and how you want to visualize them)
-**Geoms**                               | The type of visualization that you want to create (scatter, bar plot, line plot, histogram, etc.)
-
-Here is a look at two other extensions (*you can just follow along*):  
+There are many, many ways that you can customize or expand your visualization repertoire by understanding the three basic elements of ggplot graphics. Here is a look at two other extensions (*you can just follow along*):  
 
 *  The `ggthemes` package allows for replicating the visualization themes of some major publications, including The Economist, The Wall Street Journal, and FiveThirtyEight.  
 *  You can also plot multiple geoms on the same graphic, which can be very useful in highlighting a story from your data.  
