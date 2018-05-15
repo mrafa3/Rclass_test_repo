@@ -193,6 +193,7 @@ This simple example does not convey the full value of piping, but that will be c
 
 <center>
 ![](filter_graphic.png)
+</center>
 
 The `filter()` function allows you to subset your data by values of the variables in your dataset. 
 
@@ -308,6 +309,8 @@ Without piping, you need to write this code inside-out! Does anyone actually fin
 <center>
 ![](mutate_graphic.png)
 
+</center>
+
 In data analysis, it's common to want to create or *derive* new variables from your original dataset. This is done with the `dplyr::mutate()` function. For example, you might want to create a variable that is the distance in time from the beginning of the dataset. This is a typical derived variable used in regression modeling.
 
 For these new variables, let's save this as a new data object.
@@ -348,6 +351,8 @@ In your own anlayses, you've probably calculated summary stats for variables. Ea
 
 <center>
 ![](summarise_graphic.png)
+
+</center>
 
 The `summarise()` function follows the same syntax as `mutate()`, which is used for creating or deriving new variables, too. The difference is that `summarise()` is creating a new **grouped** variable with an **aggregate function**. Using the gapminder dataset as an example, what is the mean life expectancy from the dataset? 
 
