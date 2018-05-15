@@ -112,8 +112,10 @@ We'll learn the main `dplyr` functions using the **gapminder** dataset. Now that
 
 1.  Install the tidyverse and gapminder packages (`install.packages()`)  
 ```{r install_gapminder, include=TRUE, echo=TRUE, include=TRUE}
-#install.packages(c("tidyverse", "gapminder"))
+install.packages("tidyverse")
 ```
+
+
 
 2.  Load the tidyverse and gapminder packages (`library()` and `require()` effectively do the same thing, but `library()` provides more information that is occasionally useful)  
 
@@ -863,7 +865,7 @@ sup_court_term_issue %>%
 
 ```{r baseline_vote, include=TRUE, echo=TRUE, eval=FALSE, fig.height=7}
 #Restricting to cases since 1980
-(baseline_vote <- sup_court %>% 
+baseline_vote <- sup_court %>% 
   filter(term > 1980) %>% 
   mutate(liberal_vote = ifelse(directionName == 'liberal', 1,
                         ifelse(directionName == 'conservative', 0, NA))) %>% 
@@ -871,7 +873,7 @@ sup_court_term_issue %>%
   summarise(baseline_issue_vote = mean(liberal_vote, na.rm = TRUE)) %>% 
   filter(!is.na(baseline_issue_vote)) %>% 
   arrange(-baseline_issue_vote) %>% 
-  ungroup())
+  ungroup()
 ```
 
 *  Justice Scalia was known as a staunch conservative presence on the bench. Were there some issues that he leaned more centrist? (hint: `group_by()` and `summarise()` would come in handy here, yet again)  
