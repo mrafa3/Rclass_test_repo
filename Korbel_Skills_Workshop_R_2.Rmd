@@ -902,9 +902,13 @@ sup_court_fedtax <- sup_court %>%
   left_join(x=.,
             y=baseline_vote,
             by='issueAreaName')
+```
 
+```{r library_scales, include=TRUE, echo=TRUE}
 library(scales)                 #for changing axis label to include '%'
+```
 
+```{r plot_fedtax, include=TRUE, echo=TRUE}
 sup_court_fedtax %>% 
   filter(count_cases >=10) %>% 
   mutate(fedtax_lean = ifelse(perc_cases > baseline_issue_vote, 'Liberal', 'Conservative')) %>% 
@@ -934,5 +938,7 @@ sup_court_fedtax %>%
         plot.subtitle = element_text(size=16),
         strip.text = element_text(size=15, face='bold'))
 ```
+
+
 
 ---
