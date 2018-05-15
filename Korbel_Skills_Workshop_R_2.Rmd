@@ -39,14 +39,27 @@ This workshop session will help you familiarize with two of R's most widely used
 [^1]: https://www.tidyverse.org/packages/
 [^2]: https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html
 
+# Introduction 
+
+## Workshop format and key terms 
+
 Two quick notes on the format of this workshop:  
 
 1.  There are links to additional resources in the end notes of this document. I have personally used most of these resources to build my skills in R, so I hope you will find them useful, too.  
 2.  Throughout the workshop, there will be exercises to complete on your own or with your table mates. Do you best to complete these based on what you've learned. If you get stuck, you can click the "Code" button on the right to show the code that I would use to answer the question. Use that to test yourself and figure out why it works.  
 
+There are a few **key terms** that we'll use throughout this session.
+
+Term                       | Definition
+-------------------------- | -----------------------------------
+**Functions**              | You give R an input, it generates an output. A give-away that you're working with a function is parentheses.
+**Arguments**              | Functions take arguments as their input. If you're ever unsure of which arguments that a function takes, you can type args("function name"), ?("function name"), or help("function name").
+**Packages**               | A collection of code, functions, documentation, and occasionally data, created and curated by users of the R community.
+**Working directory**      | This is the location on your computer where all files relevant to your project are saved. Any files that are imported to or exported from your analysis should be here. Think of this as your project's home base.
+
 <br> 
 
-# Setting up your R Project environment  
+## Setting up your R Project environment  
 
 To get started, we need to set up our new **project environment**, with the following steps:  
 
