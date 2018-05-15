@@ -144,6 +144,7 @@ Use the `summary()` command to produce a high-level statistical summary of the v
 ```{r summary_gapminder, include=TRUE, echo=TRUE}
 summary(gapminder)
 ```
+
 <br>
 
 >Before we start into the gapminder analysis, note that this is a **"cleaned"** dataset. There are no missing values, major issues with data types, or values that could be flagged as suspicious. That was a conscious choice for this workshop, so that we could get into data manipulation and visualization. In your own work, it is extremely likely that you will need to do more data preparation before analysis.  
@@ -177,10 +178,11 @@ Let's look at the **distinct continents** in the gapminder dataset. In your code
 ```{r distinct_continent, include=TRUE, echo=TRUE}
 gapminder %>% 
   distinct(continent)
-
-#This is how the code looks without piping...not too difficult (yet)
-#distinct(gapminder, continent)
 ```
+
+This is how the code looks without piping. Not too difficult (yet).  
+ 
+>distinct(gapminder, continent)
 
 This simple example does not convey the full value of piping, but that will be clear by the end of the session. 
 
