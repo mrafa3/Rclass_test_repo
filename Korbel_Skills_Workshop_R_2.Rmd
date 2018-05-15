@@ -191,6 +191,9 @@ This simple example does not convey the full value of piping, but that will be c
 
 ## filter() 
 
+<center>
+![](filter_graphic.png)
+
 The `filter()` function allows you to subset your data by values of the variables in your dataset. 
 
 **We're going to use piping a lot in this session**, so let's get comfortable with it. Try using the pipe operator keyboard shortcut (**Ctrl + Shift + M**) with your code from this point forward. 
@@ -302,6 +305,9 @@ Without piping, you need to write this code inside-out! Does anyone actually fin
 
 ## mutate()  
 
+<center>
+![](mutate_graphic.png)
+
 In data analysis, it's common to want to create or *derive* new variables from your original dataset. This is done with the `dplyr::mutate()` function. For example, you might want to create a variable that is the distance in time from the beginning of the dataset. This is a typical derived variable used in regression modeling.
 
 For these new variables, let's save this as a new data object.
@@ -339,6 +345,9 @@ gapminder %>%
 ## summarise()   
 
 In your own anlayses, you've probably calculated summary stats for variables. Earlier, we used `summary(gapminder)` to get an overview of the gapminder dataset, based on some preset functions. `summarise()` can produce the same summary statistics as `summary()`, but you have total control over the output (it can do some neat things with grouped data, too, which you will see later). Think of `summarise()` as useful when you want to condense many rows of data down into a smaller number of rows with summary information.
+
+<center>
+![](summarise_graphic.png)
 
 The `summarise()` function follows the same syntax as `mutate()`, which is used for creating or deriving new variables, too. The difference is that `summarise()` is creating a new **grouped** variable with an **aggregate function**. Using the gapminder dataset as an example, what is the mean life expectancy from the dataset? 
 
