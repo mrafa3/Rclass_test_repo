@@ -286,7 +286,7 @@ When you are combining multiple functions, the power and clarity of piping becom
 
 <center>
 
-> arrange(filter(gapminder, year >= 2000, continent == 'Asia'), -lifeExp)
+> arrange(filter(gapminder, year >= 2000, continent == 'Asia'), lifeExp)
 
 <br>
 
