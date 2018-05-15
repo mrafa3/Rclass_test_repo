@@ -713,6 +713,10 @@ print(gapminder)</code></pre>
 <p>The <code>summarise()</code> function follows the same syntax as <code>mutate()</code>, which is used for creating or deriving new variables, too. The difference is that <code>summarise()</code> is creating a new <strong>grouped</strong> variable with an <strong>aggregate function</strong>. Using the gapminder dataset as an example, what is the mean life expectancy from the dataset?</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2FwbWluZGVyICU+JSBcbiAgc3VtbWFyaXNlKG1lYW5saWZlRXhwID0gbWVhbihsaWZlRXhwKSlcbmBgYCJ9 -->
+<pre class="r"><code>gapminder %&gt;% 
+  summarise(meanlifeExp = mean(lifeExp))</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibmNvbCI6MSwibnJvdyI6MX0sInJkZiI6Ikg0c0lBQUFBQUFBQUJuMVF1MjRDTVJEY2U4Q0ppMEJJL01kSlNSOHBSU2pUcEtLTHpMR0FKVDlPdGxHdTVMc1FuNUlpWHdLc1Q3WjBjb0VMNyt4NGRqMjczNStidDNwVEEwQU9SWmxEWGhDa0NKQkJDVE1mZTRCaU5SQUFDeDgvdnE0WCtmZi9uZ2ducldEV0VsaU95SHJISEd2MmhrbE01WXE0VlA0aWtTbkI5N2p1dTBRL00vcTNpVFZ6Yi9oTTE1ME9oVnNpcm5UbnVGWWt6YjMxeWpzSkkyVEpsNWw1OGppM0p5bVo0Ulovc0g4ZENTR1lpRVVqN0kwVTk5Q29DbzFLYkk4NjRDbXFBMWNZclhMVml0TXVwaFBCdGloQ3NxQ1poNUdiem5EbDRrNkp0WTNUamtWZDNXb1JtV0VaY0hzQTA0SnFVZGtCQUFBPSJ9 -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -740,6 +744,11 @@ print(gapminder)</code></pre>
 <p>This may be useful for your research question, but it is far more likely that you’ll want to summarise a variable like <strong>lifeExp</strong> by a <strong>grouping variable</strong>. For instance, what is the average life expectancy from this dataset <strong>by year</strong>? Anytime you want to summarise a variable “BY” another variable, <code>dplyr::group_by()</code> comes in handy.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2FwbWluZGVyICU+JSBcbiAgZ3JvdXBfYnkoeWVhcikgJT4lIFxuICBzdW1tYXJpc2UobWVhbmxpZmVFeHAgPSBtZWFuKGxpZmVFeHApKVxuYGBgIn0= -->
+<pre class="r"><code>gapminder %&gt;% 
+  group_by(year) %&gt;% 
+  summarise(meanlifeExp = mean(lifeExp))</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibmNvbCI6MiwibnJvdyI6MTJ9LCJyZGYiOiJINHNJQUFBQUFBQUFCZ3R5aVREaWl1QmlZR0JnWW1CbVlXSmdZZ1l5Z1RRREF5TURDd01uaUs1Z1lHQVdCaXRnWU9BRlloNEdCdllGUUx3VWlGY0I4WG9nM2dMRU80RjRIeEFmQnVJVFFId1dpQzhCOFhXZ0hqNlFQZ2VQOWdSUnEvdjVEcDRIUHJXcWJmem80SFgyOTMxMXYxb0g3MnVYREJQTW5qdjRYTHJibnhySTdlQjc0dGZyaW13SEI3OGo5dWZVNzJvNCtNODJlNUpxNE9RUXdPWDBLKy9TQW9jQWh3L0YxeHRTSEFKeUt1ZkUxWXM3QkJ3QTAyZ09aMDNPU1N3dUJqSUVrQVM1VWhKTEV2WFNpaEp6VTlHVjV3SEZZTXFab0lJc2xhbUpSVkEyZDI1cVlsNU9abHFxYTBVQm1sN09vdnh5UFpoK1VCZ3hOUUNKLy8vL2Z3RlMvOUFVcytjWGxHVG01d0dWTW9HQ2xSM2tLckEwQkNPN2xyRUlqeVJ2Y1dsdWJtSlJabkZxZkdxRkVaSkNCcWdqR0NHUkJXY3pRUnpDL0I5cUVEdk1rNm5KR2ZsUU5sdHFYbnBtWGlyTXFabDV5VG1sS1RBdWEwNWlVbW9PbE1NSDlEUFl5M29GUlpsNUpiRHdCWW9XNjVYa2x5VEMxSEVsNStmQVJNQ0J3ZkFQQUMyYnU4VjFBZ0FBIn0= -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -753,6 +762,11 @@ print(gapminder)</code></pre>
 <p>The gapminder dataset begs the question: how has the average life expectancy changed over time and across continents? Said another way, how has average life expectancy changed <strong>BY</strong> year and <strong>BY</strong> continent? <strong>BY</strong> is a hint that you want to group your data to answer your question. Just like previous functions that we’ve learned (such as <code>filter()</code> and <code>mutate()</code>), you can group your data by multiple conditions with comma.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2FwbWluZGVyICU+JSBcbiAgZ3JvdXBfYnkoeWVhciwgY29udGluZW50KSAlPiUgXG4gIHN1bW1hcmlzZShtZWFubGlmZUV4cCA9IG1lYW4obGlmZUV4cCkpXG5gYGAifQ== -->
+<pre class="r"><code>gapminder %&gt;% 
+  group_by(year, continent) %&gt;% 
+  summarise(meanlifeExp = mean(lifeExp))</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImdyb3VwZWRfZGYiLCJ0YmxfZGYiLCJ0YmwiLCJkYXRhLmZyYW1lIl0sIm5jb2wiOjMsIm5yb3ciOjYwfSwicmRmIjoiSDRzSUFBQUFBQUFBQnQxVTYwc1VVUlNmblZuZEhHdTFCMjFaUkVRUEM5c2l5d2dxaitabXJxbHpaNDJFeEJyWDJSemFuVmxtMTFKN0lFVUZFVDJzUGxoR3JXYVlpQ1VVYUpSRlpWbVoyWVA4RVBhT0tBa2pLTVBDN1U0N0UybERmMEFmZm5QUGkzc2U4enVYVGNtWlIrZlFCRUdRQkdVa0NaTENJajRKd2tBWWlRamxMQ1lJYWpRV0ZNOElqTVVFWVRxcGd4b2QxT25nckE3TzY2QlpCeTA2dUs2RE5oM2MwOEZESFhUOURVcnRHdzlGR1ZSb0ZrYU1zUC9iTm9nSTRXNStJKy8yWVNuNmwxZTFKcmxrd2NtcDJyQWtENitvUGxVM0p2a0V6UmR1SzVJbEw2OXFwaXduejRuWU9UaEptTlBOK2JRY3Z6TzdPS2Rma3JFMGdHRlcvZ1VzTzVnVG5aL3hDT3pWRDlxanpSc2dOWFpwMUk0WDM0Q0ptZG85SitZa0lBYjE3SnpVQkNsVmxrQ3BKUURwL1IvOFc4dnlZRVh0VGZPdDFsUmc2b09ScTZKRVFPVXZVeHZHYkFaYjdlc3RLeE5ySUNPZVB1Z28rUTVwYlpiR2hWY3ZBSnF5dlgzWDJ4aEFyZDdxTG5vcExLOTdHRXZkNm9ITStSWGg3VlZQSVQzNzg0ek8yQ3BBMHZ3bkFlNHRvRWRkOUJMdktVaHRiaXBOL05JRFdmUDJYaDZWY2hwVzFuYmZCNW9FMUhoMFd1RkFHYUQrSmNxRnNPSk9la2JkOFVYQWpJOUM5VWNISUtOaitvV2dwUkRRRDJQZTVobHpnRTFvVWhxQnRMdXZxY3lQU2NEc3EyRjJHMFpDVnRhNDZ0V2ZLb0dOcnpTM1BEOEZiUG4rM05ndjE4QmVQOFdVR0djREZOYXhKdG4yRlppRWt1dVo1REZnaGZISkMvdjNBUHU0VkdrWTdKMUgrcWxOeVlBSzFwRW54allDVThVMWZINTNDZGpLV1JWelc4emdXS3pHdFI4ZWE1NTlEdER0d01idStsNUFCbVpTMjRMSndMN0lQbDF1U1FESFhweDFmeTdZendSbWlsZGVBVHVCUEIvbHFnR1UyZmZza3IwWkhIRjRMRy82d05HcmxIY0EwdGZIcFp6dG5BaXNxOGM3bmJ3TnFPSEV0dmQ5dmVBUXRwODVGUGtTc3EzRDB5N21MUWpSZ2dvT1lRSmR3UGs1cTB2bVBQeFE0b2pZcGhHSDB1aFh3bk95S2tjNEpkRXZpTHpvVncyUkhreEF0K0RpYmNYZUlaZEZ5TkltcTNhaHN2dGtHZjRFZzhFYklRNE9DalpKWHI4Z2lUaVVWSjVKazFLbXVrNkdJZVViNUg4NFIvaUtQQjVPRm56OFdyNDQvbzlBUWkzQ29ENUNta3lGQ2pGcVF6SnBYZlBPUWtsYkhWNWNqNXZXU2hWRXA3dW9RRlBEM0Z3KzcxWVZNKzc1Vjh0V3J5ejhIaEtOclQ2clgvSnpXaHp0bE55YUpiU1FBejhCMitsdmtrVUdBQUE9In0= -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
