@@ -56,6 +56,7 @@ Term                       | Definition
 **Arguments**              | Functions take arguments as their input. If you're ever unsure of which arguments that a function takes, you can type args("function name"), ?("function name"), or help("function name").
 **Packages**               | A collection of code, functions, documentation, and occasionally data, created and curated by users of the R community.
 **Working directory**      | This is the location on your computer where all files relevant to your project are saved. Any files that are imported to or exported from your analysis should be here. Think of this as your project's home base.
+**Object**                 | R is an object-oriented programming language, meaning that you can assign meaning to a user-defined string that you can then manipulate or visualize. In R, you can assign objects with the "**<-**" assignment operator. It can be a single value, list of values, a full data set, a function, etc. In this session, the primary object that we'll use is the gapminder dataset.  
 
 <br> 
 
@@ -192,7 +193,7 @@ This simple example does not convey the full value of piping, but that will be c
 
 The `filter()` function allows you to subset your data by values of the variables in your dataset. 
 
-**We're going to use piping a lot in this session**, so let's get comfortable with it. Try using the pipe operator keyboard shortcut (Ctrl + Shift + M) with your code from this point forward. 
+**We're going to use piping a lot in this session**, so let's get comfortable with it. Try using the pipe operator keyboard shortcut (**Ctrl + Shift + M**) with your code from this point forward. 
 
 Let's filter the gapminder dataframe to look at only the values in the year 2007.  
 
