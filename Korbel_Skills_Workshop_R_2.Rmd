@@ -275,7 +275,7 @@ gapminder %>%
 gapminder %>% 
   filter(year >= 2000,
          continent == 'Asia') %>% 
-  arrange(-lifeExp)
+  arrange(lifeExp)
 ```
 
 <br>
